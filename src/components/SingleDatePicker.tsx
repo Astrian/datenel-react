@@ -83,37 +83,45 @@ export default ({ value, onSelect, localization }: Props) => {
 			<button className='stepper' onClick={() => {
 				if (currentYear === 0) return
 				setCurrentYear(currentYear - 1)
-			}}><img src={LeftArrowIcon} /></button>
+			}} aria-label={`Go to last year, ${currentYear - 1}, you are now at year ${currentYear}`}><img src={LeftArrowIcon} /></button>
 			<input className='indicator' 
 				value={currentYear}
 				onChange={e => setCurrentYear(parseInt(e.target.value))}
+				aria-label="Year input, type a year to go to that year"
 			/>
 			<button className='stepper' onClick={() => {
 				if (currentYear === 9999) return
 				setCurrentYear(currentYear + 1)
-			}}><img src={RightArrowIcon} /></button>
+			}} aria-label={`Go to next year, ${currentYear + 1}, you are now at year ${currentYear}`}><img src={RightArrowIcon} /></button>
 		</div>
 		<div className='month-selector-body'>
 			{Array.from({ length: 12 }).map((_, index) => <button className={`item`} key={index} onClick={() => {
 				setCurrentMonth(index)
 				setSelectMonth(false)
-			}}>
+			}} aria-label={`Go to ${new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })} of the year ${currentYear}`}>
 				{new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })}
 			</button>)}
 		</div>
 	</div>)
 	else return (<div className='datenel-component'>
 		<div className='header'>
-			<button className='stepper' onClick={skipToLastMonth}><img src={LeftArrowIcon} /></button>
-			<button className='indicator' onClick={() => setSelectMonth(true)}>
+			<button className='stepper' onClick={skipToLastMonth} aria-label={`Go to last month, ${new Date(currentYear, currentMonth - 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><img src={LeftArrowIcon} /></button>
+			<button className='indicator' onClick={() => setSelectMonth(true)} aria-label={`You are now at ${new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}. Click here to quick-select month or year.`}>
 				{new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}
 			</button>
-			<button className='stepper' onClick={skipToNextMonth}><img src={RightArrowIcon} /></button>
+			<button className='stepper' onClick={skipToNextMonth} aria-label={`Go to next month, ${new Date(currentYear, currentMonth + 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><img src={RightArrowIcon} /></button>
 		</div>
 		<div className='calendar-view-body'>
 			{l10nDays.map((day, index) => <div className='item day-indicator' key={index}>{day}</div>)}
 
-			{dates.map(date => <button className={`item date ${currentMonth !== date.getMonth() && 'extra-month'} ${selectedDate.toDateString() === date.toDateString() && 'active'}`} key={date.toISOString()} onClick={() => selectDate(date)}>
+			{dates.map(date => <button 
+				className={`item date ${currentMonth !== date.getMonth() && 'extra-month'} ${selectedDate.toDateString() === date.toDateString() && 'active'}`} 
+				key={date.toISOString()} 
+				onClick={() => selectDate(date)} 
+				aria-label={`${date.toLocaleString(localization || navigator.language, { dateStyle: 'full' })}${date.toDateString() === new Date().toDateString() ? ", this is today" : ""}, click to select this date`} 
+				tabIndex={currentMonth !== date.getMonth() ? -1 : 0 }
+				aria-hidden={currentMonth !== date.getMonth()}
+			>
 				{date.getDate()}
 				{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
 			</button>)}

@@ -18,6 +18,7 @@ export default () => {
 					day: 1
 				}}
 				onSelect={onSelect}
+				localization="zh-CN"
 			/>
 		</div>
 	</div>)
