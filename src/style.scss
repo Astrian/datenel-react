@@ -3,6 +3,7 @@
 	--accent-color: #000000;
 	--reversed-color: #ffffff;
 	--hover-color: #00000017;
+	--border-color: #e0e0e0;
 
 	user-select: none;
 	color: var(--main-color);
@@ -22,7 +23,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		border-bottom: 1px solid #e0e0e0;
+		border-bottom: 1px solid var(--border-color);
 
 		button {
 			img {
