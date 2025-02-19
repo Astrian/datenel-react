@@ -8,7 +8,8 @@ export default () => {
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedDate, setSelectedDate] = useState(new Date())
 	const [dates, setDates] = useState<Date[]>([])
-	const l10nDays = getL10Weekday()
+	const userLang = navigator.language
+	const l10nDays = getL10Weekday(userLang)
 
 	useEffect(() => {
 		setDates(getCalendarDates(currentMonth, currentYear))
@@ -38,7 +39,7 @@ export default () => {
 		<div className='header'>
 			<button className='month-stepper' onClick={skipToLastMonth}><img src={LeftArrowIcon} /></button>
 			<button className='month-indicator'>
-				{new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}
+				{new Date(currentYear, currentMonth).toLocaleString(userLang, { month: 'long', year: 'numeric' })}
 			</button>
 			<button className='month-stepper' onClick={skipToNextMonth}><img src={RightArrowIcon} /></button>
 		</div>
