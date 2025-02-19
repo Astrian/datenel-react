@@ -10,6 +10,7 @@ interface Props {
 		month: number,
 		day: number
 	}) => void
+	localization?: string
 }
 
 /**
@@ -23,14 +24,16 @@ interface Props {
  * date by parent component.
  * @param {(date: { year: number, month: number, day: number }) => void} props.onSelect - A callback
  * function that will be called when a date is selected inside the panel.
+ * @param {string} props.localization - The language code that will be used to localize the panel.
+ * Accept standard ISO 639-1 language code, such as 'zh-CN', 'en-US', 'ja-JP', etc. Default to the
+ * language of the user’s browser.
  */
-export default ({ value, onSelect }: Props) => {
+export default ({ value, onSelect, localization }: Props) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedDate, setSelectedDate] = useState(new Date())
 	const [dates, setDates] = useState<Date[]>([])
-	const userLang = navigator.language
-	const l10nDays = getL10Weekday(userLang)
+	const [l10nDays, setL10nDays] = useState<string[]>([])
 	const [selectMonth, setSelectMonth] = useState(true)
 
 	useEffect(() => {
@@ -44,6 +47,11 @@ export default ({ value, onSelect }: Props) => {
 		setCurrentMonth(date.getMonth())
 		setCurrentYear(date.getFullYear())
 	}, [value])
+
+	useEffect(() => {
+		const i18n = localization || navigator.language
+		setL10nDays(getL10Weekday(i18n))
+	}, [localization])
 
 	function selectDate(date: Date) {
 		setSelectedDate(date)
@@ -90,7 +98,7 @@ export default ({ value, onSelect }: Props) => {
 				setCurrentMonth(index)
 				setSelectMonth(false)
 			}}>
-				{new Date(currentYear, index).toLocaleString(userLang, { month: 'long' })}
+				{new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })}
 			</button>)}
 		</div>
 	</div>)
@@ -98,7 +106,7 @@ export default ({ value, onSelect }: Props) => {
 		<div className='header'>
 			<button className='stepper' onClick={skipToLastMonth}><img src={LeftArrowIcon} /></button>
 			<button className='indicator' onClick={() => setSelectMonth(true)}>
-				{new Date(currentYear, currentMonth).toLocaleString(userLang, { month: 'long', year: 'numeric' })}
+				{new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}
 			</button>
 			<button className='stepper' onClick={skipToNextMonth}><img src={RightArrowIcon} /></button>
 		</div>
