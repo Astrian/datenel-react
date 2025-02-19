@@ -2,7 +2,7 @@
 	--main-color: #000000;
 	--accent-color: #000000;
 	--reversed-color: #ffffff;
-	--hover-color: #0000002a;
+	--hover-color: #00000017;
 
 	user-select: none;
 	color: var(--main-color);
@@ -12,6 +12,9 @@
 		background: none;
 		cursor: pointer;
 		color: var(--main-color);
+		&:hover {
+			background: var(--hover-color);
+		}
 	}
 
 	.header {
@@ -25,6 +28,20 @@
 			img {
 				width: 1rem;
 				height: 1rem;
+			}
+
+			&.month-stepper{
+				width: 1.75rem;
+				height: 1.75rem;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border-radius: 50%;
+			}
+
+			&.month-indicator {
+				padding: 0.25rem 0.5rem;
+				border-radius: 0.25rem;
 			}
 		}
 	}

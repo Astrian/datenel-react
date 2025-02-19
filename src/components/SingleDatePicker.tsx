@@ -20,9 +20,11 @@ export default () => {
 
 	return (<div className='datenel-component'>
 		<div className='header'>
-			<button><img src={LeftArrowIcon} /></button>
-			<button>month</button>
-			<button><img src={RightArrowIcon} /></button>
+			<button className='month-stepper'><img src={LeftArrowIcon} /></button>
+			<button className='month-indicator'>
+				{new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}
+			</button>
+			<button className='month-stepper'><img src={RightArrowIcon} /></button>
 		</div>
 		<div className='body'>
 			
