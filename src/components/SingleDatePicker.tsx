@@ -147,6 +147,16 @@ export default ({ value, onSelect, localization, onClose, mainColor = '#000000',
 		else setCurrentMonth(currentMonth + 1)
 	}
 
+	function changeYear(year: string) {
+		if (isNaN(Number(year))) return
+		if (Number(year) < 0) return
+		setCurrentYear(Number(year))
+	}
+
+	function adjustYear() {
+		if (currentYear < 100) setCurrentYear(Number(`20${currentYear}`))
+	}
+
 	if (selectMonth) return (
 		<div className='datenel-component' role="dialog" aria-label="Date selection panel, you are now at month and year quick-select" id={`__datenel-${uniqueId}`}>
 			<div className='header'>
@@ -156,7 +166,8 @@ export default ({ value, onSelect, localization, onClose, mainColor = '#000000',
 				}} aria-label={`Go to last year, ${currentYear - 1}, you are now at year ${currentYear}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg></button>
 				<input className='indicator'
 					value={currentYear}
-					onChange={e => setCurrentYear(parseInt(e.target.value))}
+					onChange={e => changeYear(e.target.value)}
+					onBlur={adjustYear}
 					aria-label="Year input, type a year to go to that year"
 				/>
 				<button className='stepper' onClick={() => {
