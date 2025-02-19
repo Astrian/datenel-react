@@ -26,7 +26,8 @@ interface Props {
  * function that will be called when a date is selected inside the panel.
  * @param {string} props.localization - The language code that will be used to localize the panel.
  * Accept standard ISO 639-1 language code, such as 'zh-CN', 'en-US', 'ja-JP', etc. Default to the
- * language of the user’s browser. Note that it will not effect to the screen reader.
+ * language of the user’s browser. Note that it will not effect to the screen reader, but the screen
+ * reader will still read the date in the user’s language.
  */
 export default ({ value, onSelect, localization }: Props) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
