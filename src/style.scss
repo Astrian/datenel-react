@@ -1,0 +1,48 @@
+.datenel-component {
+	user-select: none;
+
+	.header {
+		padding: 0.75rem;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		border-bottom: 1px solid #e0e0e0;
+
+		button {
+			border: none;
+			background: none;
+			img {
+				width: 1rem;
+				height: 1rem;
+			}
+		}
+	}
+
+	.body {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		padding: 0.75rem;
+		.item {
+			width: 2rem;
+			height: 2rem;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			font-size: 0.75rem;
+		}
+		.item.day-indicator {
+			opacity: 0.5;
+		}
+		button.item {
+			border: none;
+			background: none;
+			cursor: pointer;
+		}
+		button.item.date{
+			&.extra-month {
+				opacity: 0.3;
+			}
+		}
+
+	}
+}

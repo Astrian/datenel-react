@@ -1,9 +1,11 @@
 import React from 'react'
 import { WeekPicker } from "../src/index.ts"
-import './app.css'
+import './app.scss'
 
 export default () => {
 	return (<div className='app'>
-		<WeekPicker />
+		<div className="border">
+			<WeekPicker />
+		</div>
 	</div>)
 }
