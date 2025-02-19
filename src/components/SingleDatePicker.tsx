@@ -1,7 +1,7 @@
 import LeftArrowIcon from '@/assets/icons/left-arrow.svg'
 import RightArrowIcon from '@/assets/icons/right-arrow.svg'
 import { useEffect, useState } from 'react'
-import { getCalendarDates, getL10Weekday } from '../utils'
+import { getCalendarDates, getL10Weekday, generateUniqueId, applyColor } from '../utils'
 
 interface Props {
 	/**
@@ -39,6 +39,36 @@ interface Props {
 	 * @default undefined
 	 */
 	onClose?: () => void
+
+	/**
+	 * The main color of the panel, including the text color and the border color.
+	 *@default '#000000'
+	 */
+	mainColor?: string
+
+	/**
+	 * The accent color of the panel, including the background color of the selected date.
+	 *@default '#000000'
+	 */
+	accentColor?: string
+
+	/**
+	 * The reversed color of the panel, including the text color of the selected date.
+	 *@default '#ffffff'
+	 */
+	reversedColor?: string
+
+	/**
+	 * The hover color of the panel, including the hover background color of the date.
+	 *@default '#00000017'
+	 */
+	hoverColor?: string
+
+	/**
+	 * The border color of the panel, including the divider color between the header and the body.
+	 *@default '#e0e0e0'
+	 */
+	borderColor?: string
 }
 
 /**
@@ -48,13 +78,14 @@ interface Props {
  * 
  * @param {Props} props
  */
-export default ({ value, onSelect, localization, onClose }: Props) => {
+export default ({ value, onSelect, localization, onClose, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0' }: Props) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedDate, setSelectedDate] = useState(new Date())
 	const [dates, setDates] = useState<Date[]>([])
 	const [l10nDays, setL10nDays] = useState<string[]>([])
 	const [selectMonth, setSelectMonth] = useState(false)
+	const uniqueId = generateUniqueId()
 
 	useEffect(() => {
 		setDates(getCalendarDates(currentMonth, currentYear))
@@ -72,6 +103,26 @@ export default ({ value, onSelect, localization, onClose }: Props) => {
 		const i18n = localization || navigator.language
 		setL10nDays(getL10Weekday(i18n))
 	}, [localization])
+
+	useEffect(() => {
+		applyColor(uniqueId, {
+			mainColor: mainColor,
+			accentColor: accentColor,
+			reversedColor: reversedColor,
+			hoverColor: hoverColor,
+			borderColor: borderColor
+		})
+	} , [mainColor, accentColor, reversedColor, hoverColor, borderColor])
+
+	useEffect(() => {
+		applyColor(uniqueId, {
+			mainColor: mainColor,
+			accentColor: accentColor,
+			reversedColor: reversedColor,
+			hoverColor: hoverColor,
+			borderColor: borderColor
+		})
+	}, [])
 
 	function selectDate(date: Date) {
 		setSelectedDate(date)
@@ -99,7 +150,7 @@ export default ({ value, onSelect, localization, onClose }: Props) => {
 	}
 
 	if (selectMonth) return (
-		<div className='datenel-component' role="dialog" aria-label="Date selection panel, you are now at month and year quick-select">
+		<div className='datenel-component' role="dialog" aria-label="Date selection panel, you are now at month and year quick-select" id={`__datenel-${uniqueId}`}>
 			<div className='header'>
 				<button className='stepper' onClick={() => {
 					if (currentYear === 0) return
@@ -127,7 +178,7 @@ export default ({ value, onSelect, localization, onClose }: Props) => {
 		</div>
 	)
 	else return (
-		<div className='datenel-component' role="dialog" aria-label="Date selection panel">
+		<div className='datenel-component' role="dialog" aria-label="Date selection panel" id={`__datenel-${uniqueId}`}>
 			<div className='header'>
 				<button className='stepper' onClick={skipToLastMonth} aria-label={`Go to last month, ${new Date(currentYear, currentMonth - 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><img src={LeftArrowIcon} /></button>
 				<button className='indicator' onClick={() => setSelectMonth(true)} aria-label={`You are now at ${new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}. Click here to quick-select month or year.`}>
