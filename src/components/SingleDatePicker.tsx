@@ -34,7 +34,7 @@ export default ({ value, onSelect, localization }: Props) => {
 	const [selectedDate, setSelectedDate] = useState(new Date())
 	const [dates, setDates] = useState<Date[]>([])
 	const [l10nDays, setL10nDays] = useState<string[]>([])
-	const [selectMonth, setSelectMonth] = useState(true)
+	const [selectMonth, setSelectMonth] = useState(false)
 
 	useEffect(() => {
 		setDates(getCalendarDates(currentMonth, currentYear))

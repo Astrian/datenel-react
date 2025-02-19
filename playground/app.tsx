@@ -9,7 +9,7 @@ export default () => {
 	}
 
 	return (<div className='app'>
-		
+
 		<div className="border">
 			<WeekPicker 
 				value={{
