@@ -13,9 +13,9 @@ export default (id: string, colorValues: {
 }) => {
 	const element = document.querySelector(`#__datenel-${id}`) as HTMLDivElement
 	if (!element) return
-	element.style.setProperty(`--main-color`, colorValues.mainColor)
-	element.style.setProperty(`--accent-color`, colorValues.accentColor)
-	element.style.setProperty(`--reversed-color`, colorValues.reversedColor)
-	element.style.setProperty(`--hover-color`, colorValues.hoverColor)
-	element.style.setProperty(`--border-color`, colorValues.borderColor)
+	element.style.setProperty(`--datenel-main-color`, colorValues.mainColor)
+	element.style.setProperty(`--datenel-accent-color`, colorValues.accentColor)
+	element.style.setProperty(`--datenel-reversed-color`, colorValues.reversedColor)
+	element.style.setProperty(`--datenel-hover-color`, colorValues.hoverColor)
+	element.style.setProperty(`--datenel-border-color`, colorValues.borderColor)
 }
