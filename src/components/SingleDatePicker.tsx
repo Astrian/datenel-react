@@ -32,7 +32,6 @@ export default ({ value }: Props) => {
 	useEffect(() => {
 		if (!value) return
 		const date = value instanceof Date ? value : new Date(value.year, value.month - 1, value.day)
-		console.log(date)
 		setSelectedDate(date)
 		setCurrentMonth(date.getMonth())
 		setCurrentYear(date.getFullYear())
