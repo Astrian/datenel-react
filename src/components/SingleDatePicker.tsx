@@ -34,15 +34,11 @@ interface Props {
 
 	/**
 	 * User requires to close the panel without select a specific date. Note that the close button is not 
-	 * visible, but can be read by screen reader.
+	 * visible, but can be read by screen reader. The close button for the screen reader is only available
+	 * when this prop is not `undefined`.
+	 * @default undefined
 	 */
 	onClose?: () => void
-
-	/**
-	 * Show a close button to the users with screen reader.
-	 * @default false
-	 */
-	closable?: boolean
 }
 
 /**
@@ -52,7 +48,7 @@ interface Props {
  * 
  * @param {Props} props
  */
-export default ({ value, onSelect, localization, onClose, closable = false }: Props) => {
+export default ({ value, onSelect, localization, onClose }: Props) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedDate, setSelectedDate] = useState(new Date())
@@ -127,7 +123,7 @@ export default ({ value, onSelect, localization, onClose, closable = false }: Pr
 					{new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })}
 				</button>)}
 			</div>
-			{ closable && <button className='sr-only' onClick={onClose}>Close the panel</button> }
+			{ !!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button> }
 		</div>
 	)
 	else return (
@@ -154,7 +150,7 @@ export default ({ value, onSelect, localization, onClose, closable = false }: Pr
 					{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
 				</button>)}
 			</div>
-			{ closable && <button className='sr-only' aria-hidden onClick={onClose}>Close the panel</button> }
+			{ !!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button> }
 		</div>
 	)
 }

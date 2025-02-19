@@ -19,7 +19,7 @@ export default () => {
 				}}
 				onSelect={onSelect}
 				localization="zh-CN"
-				closable
+				onClose={() => alert('close')}
 			/>
 		</div>
 	</div>)
