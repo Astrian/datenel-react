@@ -31,6 +31,7 @@ export default ({ value, onSelect }: Props) => {
 	const [dates, setDates] = useState<Date[]>([])
 	const userLang = navigator.language
 	const l10nDays = getL10Weekday(userLang)
+	const [selectMonth, setSelectMonth] = useState(true)
 
 	useEffect(() => {
 		setDates(getCalendarDates(currentMonth, currentYear))
@@ -69,16 +70,39 @@ export default ({ value, onSelect }: Props) => {
 		else setCurrentMonth(currentMonth + 1)
 	}
 
-	return (<div className='datenel-component'>
+	if (selectMonth) return (<div className='datenel-component'>
 		<div className='header'>
-			<button className='month-stepper' onClick={skipToLastMonth}><img src={LeftArrowIcon} /></button>
-			<button className='month-indicator'>
+			<button className='stepper' onClick={() => {
+				if (currentYear === 0) return
+				setCurrentYear(currentYear - 1)
+			}}><img src={LeftArrowIcon} /></button>
+			<input className='indicator' 
+				value={currentYear}
+				onChange={e => setCurrentYear(parseInt(e.target.value))}
+			/>
+			<button className='stepper' onClick={() => {
+				if (currentYear === 9999) return
+				setCurrentYear(currentYear + 1)
+			}}><img src={RightArrowIcon} /></button>
+		</div>
+		<div className='month-selector-body'>
+			{Array.from({ length: 12 }).map((_, index) => <button className={`item`} key={index} onClick={() => {
+				setCurrentMonth(index)
+				setSelectMonth(false)
+			}}>
+				{new Date(currentYear, index).toLocaleString(userLang, { month: 'long' })}
+			</button>)}
+		</div>
+	</div>)
+	else return (<div className='datenel-component'>
+		<div className='header'>
+			<button className='stepper' onClick={skipToLastMonth}><img src={LeftArrowIcon} /></button>
+			<button className='indicator' onClick={() => setSelectMonth(true)}>
 				{new Date(currentYear, currentMonth).toLocaleString(userLang, { month: 'long', year: 'numeric' })}
 			</button>
-			<button className='month-stepper' onClick={skipToNextMonth}><img src={RightArrowIcon} /></button>
+			<button className='stepper' onClick={skipToNextMonth}><img src={RightArrowIcon} /></button>
 		</div>
-		<div className='body'>
-			
+		<div className='calendar-view-body'>
 			{l10nDays.map((day, index) => <div className='item day-indicator' key={index}>{day}</div>)}
 
 			{dates.map(date => <button className={`item date ${currentMonth !== date.getMonth() && 'extra-month'} ${selectedDate.toDateString() === date.toDateString() && 'active'}`} key={date.toISOString()} onClick={() => selectDate(date)}>

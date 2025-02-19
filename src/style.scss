@@ -31,7 +31,7 @@
 				height: 1rem;
 			}
 
-			&.month-stepper{
+			&.stepper{
 				width: 1.75rem;
 				height: 1.75rem;
 				display: flex;
@@ -40,14 +40,26 @@
 				border-radius: 50%;
 			}
 
-			&.month-indicator {
+			&.indicator {
 				padding: 0.25rem 0.5rem;
 				border-radius: 0.25rem;
 			}
 		}
+
+		input.indicator {
+			border:none;
+			background: none;
+			text-align: center;
+			outline: none;
+			border-radius: 0.25rem;
+			padding: 0.25rem 0;
+			&:hover {
+				background: var(--hover-color);
+			}
+		}
 	}
 
-	.body {
+	.calendar-view-body {
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);
 		padding: 0.75rem;
@@ -84,6 +96,17 @@
 				background: var(--accent-color);
 				color: var(--reversed-color);
 			}
+		}
+	}
+
+	.month-selector-body {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		padding: 0.75rem;
+		gap: 0.125rem;
+		.item {
+			border-radius: 0.25rem;
+			height: 2rem;
 		}
 	}
 }
