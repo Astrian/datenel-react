@@ -91,6 +91,13 @@ export default ({ value, onSelect, localization, onClose, mainColor = '#000000',
 
 	useEffect(() => {
 		if (!value) return
+		if (!(value instanceof Date)) {
+			if (value.year < 100) value.year = Number(`20${value.year}`)
+			if (value.month < 0 || value.month > 11) 
+				return console.warn('Invalid value: Month should be between 1 and 12.')
+			if (value.day < 1 || value.day > 31)
+				return console.warn('Invalid value: Day should be between 1 and 31.')
+		} 
 		const date = value instanceof Date ? value : new Date(value.year, value.month - 1, value.day)
 		setSelectedDate(date)
 		setCurrentMonth(date.getMonth())
