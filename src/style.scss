@@ -1,5 +1,11 @@
 .datenel-component {
+	--main-color: #000000;
+	--accent-color: #000000;
+	--reversed-color: #ffffff;
+	--hover-color: #0000002a;
+
 	user-select: none;
+	color: var(--main-color);
 
 	.header {
 		padding: 0.75rem;
@@ -22,6 +28,7 @@
 		display: grid;
 		grid-template-columns: repeat(7, 1fr);
 		padding: 0.75rem;
+		gap: 0.125rem;
 		.item {
 			width: 2rem;
 			height: 2rem;
@@ -37,10 +44,27 @@
 			border: none;
 			background: none;
 			cursor: pointer;
+			color: var(--main-color);
 		}
 		button.item.date{
+			border-radius: 50%;
+			position: relative;
 			&.extra-month {
 				opacity: 0.3;
+			}
+			&:hover {
+				background: var(--hover-color);
+			}
+			.today-indicator{
+				position: absolute;
+				bottom: 0.25rem;
+				width: 0.25rem;
+				height: 0.25rem;
+			}
+
+			&.active {
+				background: var(--accent-color);
+				color: var(--reversed-color);
 			}
 		}
 

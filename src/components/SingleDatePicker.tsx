@@ -8,16 +8,15 @@ export default () => {
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedDate, setSelectedDate] = useState(new Date())
 	const [dates, setDates] = useState<Date[]>([])
-	const [l10nDays, setL10nDays] = useState<string[]>(getL10Weekday())
+	const l10nDays = getL10Weekday()
 
 	useEffect(() => {
 		setDates(getCalendarDates(currentMonth, currentYear))
 	}, [currentMonth, currentYear])
 
-	useEffect(() => {
-		setCurrentMonth(selectedDate.getMonth())
-		setCurrentYear(selectedDate.getFullYear())
-	}, [selectedDate])
+	function selectDate(date: Date) {
+		setSelectedDate(date)
+	}
 
 	return (<div className='datenel-component'>
 		<div className='header'>
@@ -29,8 +28,10 @@ export default () => {
 			
 			{l10nDays.map(day => <div className='item day-indicator' key={day}>{day}</div>)}
 
-			{dates.map(date => <button className={`item date ${selectedDate.getMonth() !== date.getMonth() ? 'extra-month' : ''}`} key={date.toString()}>
+			{dates.map(date => <button className={`item date ${currentMonth !== date.getMonth() && 'extra-month'} ${selectedDate.toDateString() === date.toDateString() && 'active'}`} key={date.toString()} onClick={() => selectDate(date)}>
 				{date.getDate()}
+				{/* 是今天 */}
+				{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
 			</button>)}
 		</div>
 	</div>)
