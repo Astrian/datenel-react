@@ -5,6 +5,11 @@ import { getCalendarDates, getL10Weekday } from '../utils'
 
 interface Props {
 	value?: Date | { year: number, month: number, day: number }
+	onSelect?: (date: {
+		year: number,
+		month: number,
+		day: number
+	}) => void
 }
 
 /**
@@ -16,8 +21,10 @@ interface Props {
  * @param {Date | { year: number, month: number, day: number }} props.value - Control the selected
  * date programmatically, including situations like provide a default value or control the selected 
  * date by parent component.
+ * @param {(date: { year: number, month: number, day: number }) => void} props.onSelect - A callback
+ * function that will be called when a date is selected inside the panel.
  */
-export default ({ value }: Props) => {
+export default ({ value, onSelect }: Props) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedDate, setSelectedDate] = useState(new Date())
@@ -39,6 +46,11 @@ export default ({ value }: Props) => {
 
 	function selectDate(date: Date) {
 		setSelectedDate(date)
+		onSelect?.({
+			year: date.getFullYear(),
+			month: date.getMonth() + 1,
+			day: date.getDate()
+		})
 	}
 
 	function skipToLastMonth() {
