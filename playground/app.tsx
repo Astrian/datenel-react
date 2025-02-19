@@ -20,6 +20,7 @@ export default () => {
 				onSelect={onSelect}
 				localization="zh-CN"
 				onClose={() => alert('close')}
+				mainColor='#ff0000'
 			/>
 		</div>
 	</div>)

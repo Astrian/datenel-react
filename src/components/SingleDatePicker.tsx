@@ -1,5 +1,3 @@
-import LeftArrowIcon from '@/assets/icons/left-arrow.svg'
-import RightArrowIcon from '@/assets/icons/right-arrow.svg'
 import { useEffect, useState } from 'react'
 import { getCalendarDates, getL10Weekday, generateUniqueId, applyColor } from '../utils'
 
@@ -155,7 +153,7 @@ export default ({ value, onSelect, localization, onClose, mainColor = '#000000',
 				<button className='stepper' onClick={() => {
 					if (currentYear === 0) return
 					setCurrentYear(currentYear - 1)
-				}} aria-label={`Go to last year, ${currentYear - 1}, you are now at year ${currentYear}`}><img src={LeftArrowIcon} /></button>
+				}} aria-label={`Go to last year, ${currentYear - 1}, you are now at year ${currentYear}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg></button>
 				<input className='indicator'
 					value={currentYear}
 					onChange={e => setCurrentYear(parseInt(e.target.value))}
@@ -164,7 +162,7 @@ export default ({ value, onSelect, localization, onClose, mainColor = '#000000',
 				<button className='stepper' onClick={() => {
 					if (currentYear === 9999) return
 					setCurrentYear(currentYear + 1)
-				}} aria-label={`Go to next year, ${currentYear + 1}, you are now at year ${currentYear}`}><img src={RightArrowIcon} /></button>
+				}} aria-label={`Go to next year, ${currentYear + 1}, you are now at year ${currentYear}`}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></button>
 			</div>
 			<div className='month-selector-body'>
 				{Array.from({ length: 12 }).map((_, index) => <button className={`item`} key={index} onClick={() => {
@@ -180,11 +178,11 @@ export default ({ value, onSelect, localization, onClose, mainColor = '#000000',
 	else return (
 		<div className='datenel-component' role="dialog" aria-label="Date selection panel" id={`__datenel-${uniqueId}`}>
 			<div className='header'>
-				<button className='stepper' onClick={skipToLastMonth} aria-label={`Go to last month, ${new Date(currentYear, currentMonth - 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><img src={LeftArrowIcon} /></button>
+				<button className='stepper' onClick={skipToLastMonth} aria-label={`Go to last month, ${new Date(currentYear, currentMonth - 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg></button>
 				<button className='indicator' onClick={() => setSelectMonth(true)} aria-label={`You are now at ${new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}. Click here to quick-select month or year.`}>
 					{new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}
 				</button>
-				<button className='stepper' onClick={skipToNextMonth} aria-label={`Go to next month, ${new Date(currentYear, currentMonth + 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><img src={RightArrowIcon} /></button>
+				<button className='stepper' onClick={skipToNextMonth} aria-label={`Go to next month, ${new Date(currentYear, currentMonth + 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></button>
 			</div>
 			<div className='calendar-view-body' aria-live="polite">
 				{l10nDays.map((day, index) => <div className='item day-indicator' key={index}>{day}</div>)}
