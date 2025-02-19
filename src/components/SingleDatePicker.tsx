@@ -4,12 +4,29 @@ import { useEffect, useState } from 'react'
 import { getCalendarDates, getL10Weekday } from '../utils'
 
 interface Props {
+	/**
+	 	* Control the selected
+		* date programmatically, including situations like provide a default value or control the selected 
+		* date by parent component.
+	 	*/
 	value?: Date | { year: number, month: number, day: number }
+
+	/**
+	 * A callback function that will be called when a date is selected inside the panel.
+	 * @param date - The date user selected.
+	 * @returns 
+	 */
 	onSelect?: (date: {
 		year: number,
 		month: number,
 		day: number
 	}) => void
+	/**
+	 * The language code that will be used to localize the panel.
+	 * Accept standard ISO 639-1 language code, such as 'zh-CN', 'en-US', 'ja-JP', etc. Default to the
+	 * language of the user’s browser. Note that it will not effect to the screen reader, but the screen
+	 * reader will still read the date in the user’s language.
+	 */
 	localization?: string
 }
 
@@ -18,16 +35,7 @@ interface Props {
  * 
  * @component
  * 
- * @param {Object} props
- * @param {Date | { year: number, month: number, day: number }} props.value - Control the selected
- * date programmatically, including situations like provide a default value or control the selected 
- * date by parent component.
- * @param {(date: { year: number, month: number, day: number }) => void} props.onSelect - A callback
- * function that will be called when a date is selected inside the panel.
- * @param {string} props.localization - The language code that will be used to localize the panel.
- * Accept standard ISO 639-1 language code, such as 'zh-CN', 'en-US', 'ja-JP', etc. Default to the
- * language of the user’s browser. Note that it will not effect to the screen reader, but the screen
- * reader will still read the date in the user’s language.
+ * @param {Props} props
  */
 export default ({ value, onSelect, localization }: Props) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
