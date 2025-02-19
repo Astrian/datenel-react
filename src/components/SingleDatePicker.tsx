@@ -3,7 +3,21 @@ import RightArrowIcon from '@/assets/icons/right-arrow.svg'
 import { useEffect, useState } from 'react'
 import { getCalendarDates, getL10Weekday } from '../utils'
 
-export default () => {
+interface Props {
+	value?: Date | { year: number, month: number, day: number }
+}
+
+/**
+ * A panel that allows users to select a date.
+ * 
+ * @component
+ * 
+ * @param {Object} props
+ * @param {Date | { year: number, month: number, day: number }} props.value - Control the selected
+ * date programmatically, including situations like provide a default value or control the selected 
+ * date by parent component.
+ */
+export default ({ value }: Props) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedDate, setSelectedDate] = useState(new Date())
@@ -14,6 +28,15 @@ export default () => {
 	useEffect(() => {
 		setDates(getCalendarDates(currentMonth, currentYear))
 	}, [currentMonth, currentYear])
+
+	useEffect(() => {
+		if (!value) return
+		const date = value instanceof Date ? value : new Date(value.year, value.month - 1, value.day)
+		console.log(date)
+		setSelectedDate(date)
+		setCurrentMonth(date.getMonth())
+		setCurrentYear(date.getFullYear())
+	}, [value])
 
 	function selectDate(date: Date) {
 		setSelectedDate(date)
