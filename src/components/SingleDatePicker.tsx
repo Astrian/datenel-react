@@ -5,7 +5,10 @@ interface Props {
 	/**
 	 	* Control the selected
 		* date programmatically, including situations like provide a default value or control the selected 
-		* date by parent component.
+		* date by parent component. Use 1-12 for month, instead of 0-11, if you are using object to set the
+		* value.
+		* @example { year: 2025, month: 1, day: 1 }
+		* @example new Date(2025, 0, 1)
 		* @default new Date()
 	 	*/
 	value?: Date | { year: number, month: number, day: number }
@@ -13,7 +16,8 @@ interface Props {
 	/**
 	 * A callback function that will be called when a date is selected inside the panel.
 	 * @param date - The date user selected.
-	 * @returns 
+	 * @returns {{ year: number, month: number, day: number }} - The date user selected.
+	 * @example { year: 2025, month: 1, day: 1 } // User selected 1 Jan 2025
 	 */
 	onSelect?: (date: {
 		year: number,
