@@ -79,7 +79,7 @@ export default ({ value, onSelect, localization }: Props) => {
 		else setCurrentMonth(currentMonth + 1)
 	}
 
-	if (selectMonth) return (<div className='datenel-component'>
+	if (selectMonth) return (<div className='datenel-component' aria-label="Date picker, you are now at month and year quick-select panel">
 		<div className='header'>
 			<button className='stepper' onClick={() => {
 				if (currentYear === 0) return
@@ -104,7 +104,7 @@ export default ({ value, onSelect, localization }: Props) => {
 			</button>)}
 		</div>
 	</div>)
-	else return (<div className='datenel-component'>
+	else return (<div className='datenel-component' aria-label="Date picker. Click Tab button to switch between months, or select a date">
 		<div className='header'>
 			<button className='stepper' onClick={skipToLastMonth} aria-label={`Go to last month, ${new Date(currentYear, currentMonth - 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><img src={LeftArrowIcon} /></button>
 			<button className='indicator' onClick={() => setSelectMonth(true)} aria-label={`You are now at ${new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}. Click here to quick-select month or year.`}>
