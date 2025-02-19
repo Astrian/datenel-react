@@ -7,6 +7,13 @@
 	user-select: none;
 	color: var(--main-color);
 
+	button {
+		border: none;
+		background: none;
+		cursor: pointer;
+		color: var(--main-color);
+	}
+
 	.header {
 		padding: 0.75rem;
 		display: flex;
@@ -15,8 +22,6 @@
 		border-bottom: 1px solid #e0e0e0;
 
 		button {
-			border: none;
-			background: none;
 			img {
 				width: 1rem;
 				height: 1rem;
@@ -40,13 +45,8 @@
 		.item.day-indicator {
 			opacity: 0.5;
 		}
-		button.item {
-			border: none;
-			background: none;
-			cursor: pointer;
-			color: var(--main-color);
-		}
-		button.item.date{
+
+		button.item.date {
 			border-radius: 50%;
 			position: relative;
 			&.extra-month {
@@ -55,7 +55,7 @@
 			&:hover {
 				background: var(--hover-color);
 			}
-			.today-indicator{
+			.today-indicator {
 				position: absolute;
 				bottom: 0.25rem;
 				width: 0.25rem;
@@ -67,6 +67,5 @@
 				color: var(--reversed-color);
 			}
 		}
-
 	}
 }
