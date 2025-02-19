@@ -19,6 +19,7 @@ export default () => {
 				}}
 				onSelect={onSelect}
 				localization="zh-CN"
+				closable
 			/>
 		</div>
 	</div>)
