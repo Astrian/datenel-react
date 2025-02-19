@@ -18,13 +18,29 @@ export default () => {
 		setSelectedDate(date)
 	}
 
+	function skipToLastMonth() {
+		if (currentMonth === 0) {
+			setCurrentMonth(11)
+			setCurrentYear(currentYear - 1)
+		}
+		else setCurrentMonth(currentMonth - 1)
+	}
+
+	function skipToNextMonth() {
+		if (currentMonth === 11) {
+			setCurrentMonth(0)
+			setCurrentYear(currentYear + 1)
+		}
+		else setCurrentMonth(currentMonth + 1)
+	}
+
 	return (<div className='datenel-component'>
 		<div className='header'>
-			<button className='month-stepper'><img src={LeftArrowIcon} /></button>
+			<button className='month-stepper' onClick={skipToLastMonth}><img src={LeftArrowIcon} /></button>
 			<button className='month-indicator'>
 				{new Date(currentYear, currentMonth).toLocaleString('default', { month: 'long', year: 'numeric' })}
 			</button>
-			<button className='month-stepper'><img src={RightArrowIcon} /></button>
+			<button className='month-stepper' onClick={skipToNextMonth}><img src={RightArrowIcon} /></button>
 		</div>
 		<div className='body'>
 			
