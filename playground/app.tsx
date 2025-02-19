@@ -20,11 +20,6 @@ export default () => {
 				onSelect={onSelect}
 				localization="zh-CN"
 				onClose={() => alert('close')}
-				mainColor='#424c50'
-				accentColor='#424c50'
-				reversedColor='#e9f1f6'
-				hoverColor='#e9e7ef44'
-				borderColor='#758a9944'
 			/>
 		</div>
 	</div>)

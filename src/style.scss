@@ -87,6 +87,7 @@
 			position: relative;
 			&.extra-month {
 				opacity: 0.3;
+				cursor: default;
 			}
 			&:hover {
 				background: var(--datenel-hover-color);
