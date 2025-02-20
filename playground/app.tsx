@@ -10,8 +10,9 @@ export default () => {
 
 	return (<div className='app'>
 		<div className="border">
-			<SingleWeekPicker />
-			<SingleDatePicker />
+			<div>
+				<SingleWeekPicker />
+			</div>
 		</div>
 	</div>)
 }

@@ -133,23 +133,34 @@ export default ({ localization, mainColor = '#000000', accentColor = '#000000', 
 				<button className='stepper' onClick={skipToNextMonth} aria-label={`Go to next month, ${new Date(currentYear, currentMonth + 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></button>
 			</div>
 
-			<div className='calendar-view-body flex' aria-live="polite">
-				<div className="listitem">
-					{Array.from({ length: 7 }).map((_, index) => <div className='item day-indicator' key={index}>{l10nDays[index]}</div>)}
+			<div className="body">
+				<div className="week-indicator">
+					<div className="item title">Wk</div>
+
+					{calendarWeeks.map(week => <div className={`item ${selectedWeek.weekNum === calculateWeekNum(week[0]).weekNum && selectedWeek.weekYear === calculateWeekNum(week[0]).weekYear ? 'active' : ''}`} key={calculateWeekNum(week[0]).weekNum} onClick={() => selectWeek(week[0])}>
+						{calculateWeekNum(week[0]).weekNum}
+					</div>)}
+
 				</div>
 
-				{calendarWeeks.map((week, index) => {
-					const isSelected = selectedWeek.weekYear === calculateWeekNum(week[0]).weekYear && selectedWeek.weekNum === calculateWeekNum(week[0]).weekNum
-					return <button className={`listitem ${isSelected ? 'active' : ''}`} key={index} onClick={() => selectWeek(week[0])}>
-						{week.map(date => <div
-							className={`item date ${currentMonth !== date.getMonth() && 'extra-month'}`}
-							key={date.getDate()}
-						>
-							{date.getDate()}
-							{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
-						</div>)}
-					</button>
-				})}
+				<div className='calendar-view-body flex' aria-live="polite">
+					<div className="listitem">
+						{Array.from({ length: 7 }).map((_, index) => <div className='item day-indicator' key={index}>{l10nDays[index]}</div>)}
+					</div>
+
+					{calendarWeeks.map((week, index) => {
+						const isSelected = selectedWeek.weekYear === calculateWeekNum(week[0]).weekYear && selectedWeek.weekNum === calculateWeekNum(week[0]).weekNum
+						return <button className={`listitem ${isSelected ? 'active' : ''}`} key={index} onClick={() => selectWeek(week[0])}>
+							{week.map(date => <div
+								className={`item date ${currentMonth !== date.getMonth() && 'extra-month'}`}
+								key={date.getDate()}
+							>
+								{date.getDate()}
+								{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
+							</div>)}
+						</button>
+					})}
+				</div>
 			</div>
 		</div>
 	}
