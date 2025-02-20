@@ -8,20 +8,30 @@ export default defineConfig(({mode}) => ({
     lib: {
       entry: "src/index.ts",
       name: "datenel-react",
-      fileName: format => `datenel.${format}.js`,
+      fileName: format => `index.${format}.js`,
     },
     rollupOptions: {
       external: ["react"],
       output: {
         globals: {
           react: "React",
+          "react-dom": "ReactDOM",
         },
+        assetFileNames: assetInfo => {
+          if (assetInfo.names[0].endsWith(".css")) {
+            return "index.css";
+          }
+          return `assets/${assetInfo.names[0]}`;
+        }
       },
     },
   },
-  plugins: [react(), dts({
-    tsconfigPath: "./tsconfig.app.json"
-  })],
+  plugins: [
+    react(),
+    dts({
+      tsconfigPath: "./tsconfig.app.json"
+    }),
+  ],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
