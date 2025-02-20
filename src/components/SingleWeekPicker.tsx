@@ -52,6 +52,14 @@ export interface SingleWeekPickerProps {
 		weekYear: number,
 		weekNum: number
 	}) => void
+
+	/**
+	 * User requires to close the panel without select a specific date. Note that the close button is not 
+	 * visible, but can be read by screen reader. The close button for the screen reader is only available
+	 * when this prop is not `undefined`.
+	 * @default undefined
+	 */
+	onClose?: () => void
 }
 
 /**
@@ -62,7 +70,7 @@ export interface SingleWeekPickerProps {
  * 
  * @param 
  */
-export default ({ localization, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0' }: SingleWeekPickerProps) => {
+export default ({ localization, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0', onClose }: SingleWeekPickerProps) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedWeek, setSelectedWeek] = useState<{ weekYear: number, weekNum: number }>(calculateWeekNum(new Date()))
@@ -157,6 +165,7 @@ export default ({ localization, mainColor = '#000000', accentColor = '#000000', 
 					</button>)}
 				</div>
 			</div>
+			{!!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button>}
 		</div>
 	} else {
 		return <div className='datenel-component' role="dialog" aria-label="Week selection panel" id={`__datenel-${uniqueId}`}>
@@ -186,7 +195,7 @@ export default ({ localization, mainColor = '#000000', accentColor = '#000000', 
 
 					{calendarWeeks.map((week, index) => {
 						const isSelected = selectedWeek.weekYear === calculateWeekNum(week[0]).weekYear && selectedWeek.weekNum === calculateWeekNum(week[0]).weekNum
-						return <button className={`listitem ${isSelected ? 'active' : ''}`} key={index} onClick={() => selectWeek(week[0])}>
+						return <button className={`listitem ${isSelected ? 'active' : ''}`} key={index} onClick={() => selectWeek(week[0])} aria-label={`Select week ${calculateWeekNum(week[0]).weekNum} of the year ${calculateWeekNum(week[0]).weekYear}, from ${week[0].toLocaleString(localization || navigator.language, { dateStyle: "full" })} to ${week[6].toLocaleString(localization || navigator.language, { weekday: 'long' })}, ${week[6].toLocaleString(localization || navigator.language, { month: 'long' })} ${week[6].getDate()}, ${week[6].getFullYear()}`}>
 							{week.map(date => <div
 								className={`item date ${currentMonth !== date.getMonth() && 'extra-month'}`}
 								key={date.getDate()}
@@ -198,6 +207,8 @@ export default ({ localization, mainColor = '#000000', accentColor = '#000000', 
 					})}
 				</div>
 			</div>
+
+			{!!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button>}
 		</div>
 	}
 }
