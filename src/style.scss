@@ -7,6 +7,7 @@
 		background: none;
 		cursor: pointer;
 		color: var(--datenel-main-color);
+
 		&:hover {
 			background: var(--datenel-hover-color);
 		}
@@ -36,7 +37,7 @@
 				height: 1rem;
 			}
 
-			&.stepper{
+			&.stepper {
 				width: 1.75rem;
 				height: 1.75rem;
 				display: flex;
@@ -52,68 +53,132 @@
 		}
 
 		input.indicator {
-			border:none;
+			border: none;
 			background: none;
 			text-align: center;
 			outline: none;
 			border-radius: 0.25rem;
 			padding: 0.25rem 0;
 			color: var(--datenel-main-color);
+
 			&:hover {
 				background: var(--datenel-hover-color);
 			}
 		}
 	}
 
-	.calendar-view-body {
-		display: grid;
-		grid-template-columns: repeat(7, 1fr);
-		padding: 0.75rem;
-		gap: 0.125rem;
-		.item {
-			width: 2rem;
-			height: 2rem;
+	.body {
+		display: flex;
+		.calendar-view-body {
+			padding: 0.75rem;
+			gap: 0.125rem;
+
+			&.grid {
+				display: grid;
+				grid-template-columns: repeat(7, 1fr);
+
+				.item.date {
+					border-radius: 50%;
+
+					&.extra-month {
+						cursor: default;
+					}
+
+					&.active {
+						background: var(--datenel-accent-color);
+						color: var(--datenel-reversed-color);
+					}
+				}
+			}
+
+			&.flex {
+				display: flex;
+				flex-direction: column;
+
+				.listitem {
+					padding: 0;
+					display: grid;
+					grid-template-columns: repeat(7, 1fr);
+					border-radius: 1rem;
+
+					.item.date {
+						background: none;
+					}
+
+					&.active {
+						background: var(--datenel-accent-color);
+						color: var(--datenel-reversed-color);
+
+						.extra-month {
+							opacity: 0.5;
+						}
+					}
+				}
+
+			}
+
+			.item {
+				width: 2rem;
+				height: 2rem;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 0.75rem;
+				position: relative;
+
+				&.extra-month {
+					opacity: 0.3;
+				}
+
+				&.day-indicator {
+					opacity: 0.5;
+				}
+
+				.today-indicator {
+					position: absolute;
+					bottom: 0.25rem;
+					width: 0.25rem;
+					height: 0.25rem;
+				}
+			}
+		}
+
+		.month-selector-body {
+			display: grid;
+			grid-template-columns: repeat(3, 1fr);
+			padding: 0.75rem;
+			gap: 0.125rem;
+
+			.item {
+				border-radius: 0.25rem;
+				height: 2rem;
+			}
+		}
+
+		.week-indicator {
 			display: flex;
-			justify-content: center;
-			align-items: center;
-			font-size: 0.75rem;
-		}
-		.item.day-indicator {
-			opacity: 0.5;
-		}
+			flex-direction: column;
+			border-right: 1px solid var(--datenel-border-color);
+			gap: 0.125rem;
+			padding: 0.75rem;
 
-		button.item.date {
-			border-radius: 50%;
-			position: relative;
-			&.extra-month {
-				opacity: 0.3;
-				cursor: default;
-			}
-			&:hover {
-				background: var(--datenel-hover-color);
-			}
-			.today-indicator {
-				position: absolute;
-				bottom: 0.25rem;
-				width: 0.25rem;
-				height: 0.25rem;
+			.item {
+				font-size: 0.75rem;
+				width: 2rem;
+				height: 2rem;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				border-radius: 50%;
 			}
 
-			&.active {
+			.item.title {
+				opacity: 0.5;
+			}
+			.item.active {
 				background: var(--datenel-accent-color);
 				color: var(--datenel-reversed-color);
 			}
-		}
-	}
-
-	.month-selector-body {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		padding: 0.75rem;
-		gap: 0.125rem;
-		.item {
-			border-radius: 0.25rem;
-			height: 2rem;
 		}
 	}
 }

@@ -3,20 +3,19 @@ import { getCalendarDates, getL10Weekday, generateUniqueId, applyColor } from '.
 
 export interface SingleDatePickerProps {
 	/**
-	 	* Control the selected
+			* Control the selected
 		* date programmatically, including situations like provide a default value or control the selected 
 		* date by parent component. Use 1-12 for month, instead of 0-11, if you are using object to set the
 		* value.
 		* @example { year: 2025, month: 1, day: 1 }
 		* @example new Date(2025, 0, 1)
 		* @default new Date()
-	 	*/
+			*/
 	value?: Date | { year: number, month: number, day: number }
 
 	/**
 	 * A callback function that will be called when a date is selected inside the panel.
-	 * @param date - The date user selected.
-	 * @returns {{ year: number, month: number, day: number }} - The date user selected.
+	 * @param {{ year: number, month: number, day: number }} - The date user selected.
 	 * @example { year: 2025, month: 1, day: 1 } // User selected 1 Jan 2025
 	 */
 	onSelect?: (date: {
@@ -74,6 +73,7 @@ export interface SingleDatePickerProps {
 }
 
 /**
+ * SingleDatePicker
  * A panel that allows users to select a date.
  * 
  * @component
@@ -97,11 +97,11 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 		if (!value) return
 		if (!(value instanceof Date)) {
 			if (value.year < 100) value.year = Number(`20${value.year}`)
-			if (value.month < 0 || value.month > 11) 
+			if (value.month < 0 || value.month > 11)
 				return console.warn('Invalid value: Month should be between 1 and 12.')
 			if (value.day < 1 || value.day > 31)
 				return console.warn('Invalid value: Day should be between 1 and 31.')
-		} 
+		}
 		const date = value instanceof Date ? value : new Date(value.year, value.month - 1, value.day)
 		setSelectedDate(date)
 		setCurrentMonth(date.getMonth())
@@ -121,17 +121,7 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 			hoverColor: hoverColor,
 			borderColor: borderColor
 		})
-	} , [mainColor, accentColor, reversedColor, hoverColor, borderColor])
-
-	useEffect(() => {
-		applyColor(uniqueId, {
-			mainColor: mainColor,
-			accentColor: accentColor,
-			reversedColor: reversedColor,
-			hoverColor: hoverColor,
-			borderColor: borderColor
-		})
-	}, [])
+	}, [mainColor, accentColor, reversedColor, hoverColor, borderColor])
 
 	function selectDate(date: Date) {
 		setSelectedDate(date)
@@ -185,15 +175,17 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 					setCurrentYear(currentYear + 1)
 				}} aria-label={`Go to next year, ${currentYear + 1}, you are now at year ${currentYear}`}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></button>
 			</div>
-			<div className='month-selector-body'>
-				{Array.from({ length: 12 }).map((_, index) => <button className={`item`} key={index} onClick={() => {
-					setCurrentMonth(index)
-					setSelectMonth(false)
-				}} aria-label={`Go to ${new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })} of the year ${currentYear}`}>
-					{new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })}
-				</button>)}
+			<div className='body'>
+				<div className='month-selector-body'>
+					{Array.from({ length: 12 }).map((_, index) => <button className={`item`} key={index} onClick={() => {
+						setCurrentMonth(index)
+						setSelectMonth(false)
+					}} aria-label={`Go to ${new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })} of the year ${currentYear}`}>
+						{new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })}
+					</button>)}
+				</div>
 			</div>
-			{ !!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button> }
+			{!!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button>}
 		</div>
 	)
 	else return (
@@ -205,23 +197,25 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 				</button>
 				<button className='stepper' onClick={skipToNextMonth} aria-label={`Go to next month, ${new Date(currentYear, currentMonth + 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></button>
 			</div>
-			<div className='calendar-view-body' aria-live="polite">
-				{l10nDays.map((day, index) => <div className='item day-indicator' key={index}>{day}</div>)}
+			<div className='body'>
+				<div className='calendar-view-body grid' aria-live="polite">
+					{l10nDays.map((day, index) => <div className='item day-indicator' key={index}>{day}</div>)}
 
-				{dates.map(date => <button
-					className={`item date ${currentMonth !== date.getMonth() && 'extra-month'} ${selectedDate.toDateString() === date.toDateString() && 'active'}`}
-					key={date.toISOString()}
-					onClick={() => selectDate(date)}
-					aria-label={`${date.toLocaleString(localization || navigator.language, { dateStyle: 'full' })}${date.toDateString() === new Date().toDateString() ? ", this is today" : ""}, click to select this date`}
-					tabIndex={currentMonth !== date.getMonth() ? -1 : 0}
-					aria-hidden={currentMonth !== date.getMonth()}
-					disabled={currentMonth !== date.getMonth()}
-				>
-					{date.getDate()}
-					{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
-				</button>)}
+					{dates.map(date => <button
+						className={`item date ${currentMonth !== date.getMonth() && 'extra-month'} ${selectedDate.toDateString() === date.toDateString() && 'active'}`}
+						key={date.toISOString()}
+						onClick={() => selectDate(date)}
+						aria-label={`${date.toLocaleString(localization || navigator.language, { dateStyle: 'full' })}${date.toDateString() === new Date().toDateString() ? ", this is today" : ""}, click to select this date`}
+						tabIndex={currentMonth !== date.getMonth() ? -1 : 0}
+						aria-hidden={currentMonth !== date.getMonth()}
+						disabled={currentMonth !== date.getMonth()}
+					>
+						{date.getDate()}
+						{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
+					</button>)}
+				</div>
 			</div>
-			{ !!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button> }
+			{!!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button>}
 		</div>
 	)
 }

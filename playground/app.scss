@@ -10,8 +10,12 @@ body {
 	justify-content: center;
 	align-items: center;
 	.border {
-		background: #fff;
-		border-radius: 5px;
-		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		display: flex;
+		gap: 0.5rem;
+		> * {
+			background: #fff;
+			border-radius: 5px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		}
 	}
 }
