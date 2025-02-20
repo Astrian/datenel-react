@@ -5,13 +5,13 @@ import './app.scss'
 export default () => {
 
 	function onSelect(value) {
-		alert(`You select ${value.year}-${value.month}-${value.day}`)
+		alert(`You select ${value.weekYear} - ${value.weekNum}`)
 	}
 
 	return (<div className='app'>
 		<div className="border">
 			<div>
-				<SingleWeekPicker />
+				<SingleWeekPicker onSelect={onSelect} />
 			</div>
 		</div>
 	</div>)

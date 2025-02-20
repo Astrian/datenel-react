@@ -43,8 +43,8 @@ export interface SingleWeekPickerProps {
 
 	/**
 	 * A callback function that will be called when a week is selected inside the panel. Note that
-	 * Datenel will follow the ISO 8601 standard as well as the return rules of Luxon, which will
-	 * treat the week number 53 as the first week of the next year if exist.
+	 * Datenel will follow the ISO 8601 standard to calculate the week number, which means that the first
+	 * week of the year is the week with the first Friday in it (week started from Monday).
 	 * @param {{ year: number, month: number, day: number }} - The date user selected.
 	 * @example { year: 2025, month: 1, day: 1 } // User selected 1 Jan 2025
 	 */
@@ -70,7 +70,7 @@ export interface SingleWeekPickerProps {
  * 
  * @param 
  */
-export default ({ localization, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0', onClose }: SingleWeekPickerProps) => {
+export default ({ localization, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0', onClose, onSelect }: SingleWeekPickerProps) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedWeek, setSelectedWeek] = useState<{ weekYear: number, weekNum: number }>(calculateWeekNum(new Date()))
@@ -126,6 +126,7 @@ export default ({ localization, mainColor = '#000000', accentColor = '#000000', 
 
 	function selectWeek(date: Date) {
 		setSelectedWeek(calculateWeekNum(date))
+		onSelect?.(calculateWeekNum(date))
 	}
 
 	function changeYear(year: string) {
