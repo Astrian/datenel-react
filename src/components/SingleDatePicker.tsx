@@ -124,16 +124,6 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 		})
 	} , [mainColor, accentColor, reversedColor, hoverColor, borderColor])
 
-	useEffect(() => {
-		applyColor(uniqueId, {
-			mainColor: mainColor,
-			accentColor: accentColor,
-			reversedColor: reversedColor,
-			hoverColor: hoverColor,
-			borderColor: borderColor
-		})
-	}, [])
-
 	function selectDate(date: Date) {
 		setSelectedDate(date)
 		onSelect?.({
