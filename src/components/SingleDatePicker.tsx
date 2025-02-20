@@ -80,7 +80,7 @@ export interface SingleDatePickerProps {
  * 
  * @param {SingleDatePickerProps} props
  */
-const SingleDatePicker: React.FC = ({ value, onSelect, localization, onClose, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0' }: SingleDatePickerProps) => {
+const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, localization, onClose, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0' }: SingleDatePickerProps) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedDate, setSelectedDate] = useState(new Date())

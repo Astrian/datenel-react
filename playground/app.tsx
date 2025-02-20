@@ -1,5 +1,5 @@
 import React from 'react'
-import { SingleDatePicker } from "../dist/index.es"
+import { SingleDatePicker } from "../src/index"
 import './app.scss'
 
 export default () => {
