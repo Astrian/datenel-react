@@ -15,8 +15,7 @@ export interface SingleDatePickerProps {
 
 	/**
 	 * A callback function that will be called when a date is selected inside the panel.
-	 * @param date - The date user selected.
-	 * @returns {{ year: number, month: number, day: number }} - The date user selected.
+	 * @param {{ year: number, month: number, day: number }} - The date user selected.
 	 * @example { year: 2025, month: 1, day: 1 } // User selected 1 Jan 2025
 	 */
 	onSelect?: (date: {

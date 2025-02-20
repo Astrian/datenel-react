@@ -40,6 +40,18 @@ export interface SingleWeekPickerProps {
 	 *@default '#e0e0e0'
 	 */
 	borderColor?: string
+
+	/**
+	 * A callback function that will be called when a week is selected inside the panel. Note that
+	 * Datenel will follow the ISO 8601 standard as well as the return rules of Luxon, which will
+	 * treat the week number 53 as the first week of the next year if exist.
+	 * @param {{ year: number, month: number, day: number }} - The date user selected.
+	 * @example { year: 2025, month: 1, day: 1 } // User selected 1 Jan 2025
+	 */
+	onSelect?: (date: {
+		weekYear: number,
+		weekNum: number
+	}) => void
 }
 
 /**
@@ -53,6 +65,7 @@ export interface SingleWeekPickerProps {
 export default ({ localization, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0' }: SingleWeekPickerProps) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
+	const [selectedWeek, setSelectedWeek] = useState<{ weekYear: number, weekNum: number }>(calculateWeekNum(new Date()))
 	const [selectMonth, setSelectMonth] = useState(false)
 	const [calendarWeeks, setCalendarWeeks] = useState<Date[][]>([])
 	const [l10nDays, setL10nDays] = useState<string[]>([])
@@ -103,6 +116,10 @@ export default ({ localization, mainColor = '#000000', accentColor = '#000000', 
 		console.log(calculateWeekNum(date))
 	}, [])
 
+	function selectWeek(date: Date) {
+		setSelectedWeek(calculateWeekNum(date))
+	}
+
 	if (selectMonth) {
 		return <div className='datenel-component' role="dialog" aria-label="Week selection panel, you are now at month and year quick-select" id={`__datenel-${uniqueId}`}></div>
 	} else {
@@ -121,14 +138,18 @@ export default ({ localization, mainColor = '#000000', accentColor = '#000000', 
 					{Array.from({ length: 7 }).map((_, index) => <div className='item day-indicator' key={index}>{l10nDays[index]}</div>)}
 				</div>
 
-				{calendarWeeks.map((week, index) => <button className="listitem" key={index} onClick={() => console.log(calculateWeekNum(week[0]))}>
-					{week.map(date => <div
-						className={`item date ${currentMonth !== date.getMonth() && 'extra-month'}`}
-						key={date.getDate()}
-					>
-						{date.getDate()}
-					</div>)}
-				</button>)}
+				{calendarWeeks.map((week, index) => {
+					const isSelected = selectedWeek.weekYear === calculateWeekNum(week[0]).weekYear && selectedWeek.weekNum === calculateWeekNum(week[0]).weekNum
+					return <button className={`listitem ${isSelected ? 'active' : ''}`} key={index} onClick={() => selectWeek(week[0])}>
+						{week.map(date => <div
+							className={`item date ${currentMonth !== date.getMonth() && 'extra-month'}`}
+							key={date.getDate()}
+						>
+							{date.getDate()}
+							{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
+						</div>)}
+					</button>
+				})}
 			</div>
 		</div>
 	}

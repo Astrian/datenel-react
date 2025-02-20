@@ -73,15 +73,8 @@
 			grid-template-columns: repeat(7, 1fr);
 			.item.date {
 				border-radius: 50%;
-				position: relative;
 				&.extra-month {
 					cursor: default;
-				}
-				.today-indicator {
-					position: absolute;
-					bottom: 0.25rem;
-					width: 0.25rem;
-					height: 0.25rem;
 				}
 	
 				&.active {
@@ -101,6 +94,13 @@
 				.item.date {
 					background: none;
 				}
+				&.active {
+					background: var(--datenel-accent-color);
+					color: var(--datenel-reversed-color);
+					.extra-month {
+						opacity: 0.5;
+					}
+				}
 			}
 			
 		}
@@ -111,15 +111,20 @@
 			justify-content: center;
 			align-items: center;
 			font-size: 0.75rem;
+			position: relative;
 			&.extra-month {
 				opacity: 0.3;
 			}
 			&.day-indicator {
 				opacity: 0.5;
 			}
+			.today-indicator {
+				position: absolute;
+				bottom: 0.25rem;
+				width: 0.25rem;
+				height: 0.25rem;
+			}
 		}
-
-		
 	}
 
 	.month-selector-body {
