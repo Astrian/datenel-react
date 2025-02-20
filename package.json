@@ -33,7 +33,6 @@
   "exports": {
     "import": "./dist/datenel.es.js",
     "require": "./dist/index.cjs.js",
-    "types": "./dist/index.d.ts",
     "default": "./dist/datenel.es.js"
   },
   "main": "dist/index.cjs.js",
