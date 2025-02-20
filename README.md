@@ -4,7 +4,7 @@
 
 Datenel is a web UI component for selecting dates. It provides a customizable date picker panel that can be easily integrated into your React applications.
 
-![A preview of Datenel components for SingleWeekPicker and SingleDayPicker](./marketing_assets/preview.png)
+![A preview of Datenel components for SingleWeekPicker and SingleDayPicker](https://s2.loli.net/2025/02/21/CTnxMcEOg53WK9y.png)
 
 *Shadow border not included. Battery included.*
 
