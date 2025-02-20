@@ -71,7 +71,7 @@ npm i # or `yarn`
 npm run dev # or `yarn dev`
 ```
 
-Then the package will launch a testing React hot-reload server in `localhost:1926`. The server file available in `playground` folder, feel free to modify content inside it.
+Then the package will launch a testing React hot-reload server on `localhost:1926`. The server file is available in the `playground` folder, feel free to modify the content inside it.
 
 ## License
 
