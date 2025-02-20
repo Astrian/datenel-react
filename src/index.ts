@@ -1,3 +1,3 @@
 import './style.scss'
 
-export {default as WeekPicker} from './components/SingleDatePicker.tsx'
+export {default as SingleDatePicker} from './components/SingleDatePicker.tsx'
