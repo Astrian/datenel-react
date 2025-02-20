@@ -1,5 +1,5 @@
 import React from 'react'
-import { WeekPicker } from "../src/index.ts"
+import { SingleDatePicker } from "../dist/index.es"
 import './app.scss'
 
 export default () => {
@@ -11,7 +11,7 @@ export default () => {
 	return (<div className='app'>
 
 		<div className="border">
-			<WeekPicker 
+			<SingleDatePicker 
 				value={{
 					year: 2025,
 					month: 1,
