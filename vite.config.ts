@@ -2,6 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import dts from 'vite-plugin-dts'
 import path from "path"
+import cssInjectedByJsPlugin from "vite-plugin-css-injected-by-js"
 
 export default defineConfig(({mode}) => ({
   build: {
@@ -11,6 +12,7 @@ export default defineConfig(({mode}) => ({
       fileName: format => `index.${format}.js`,
     },
     rollupOptions: {
+      preserveEntrySignatures: "strict",
       external: ["react"],
       output: {
         globals: {
@@ -31,6 +33,7 @@ export default defineConfig(({mode}) => ({
     dts({
       tsconfigPath: "./tsconfig.app.json"
     }),
+    cssInjectedByJsPlugin()
   ],
   resolve: {
     alias: {
