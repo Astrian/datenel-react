@@ -11,6 +11,7 @@ export default defineConfig(({mode}) => ({
       name: "datenel-react",
       fileName: format => `index.${format}.js`,
     },
+    sourcemap: true,
     rollupOptions: {
       preserveEntrySignatures: "strict",
       external: ["react"],
