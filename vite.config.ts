@@ -20,8 +20,7 @@ export default defineConfig(({mode}) => ({
     },
   },
   plugins: [react(), dts({
-    insertTypesEntry: true,
-    logLevel: "info"
+    tsconfigPath: "./tsconfig.app.json"
   })],
   resolve: {
     alias: {
