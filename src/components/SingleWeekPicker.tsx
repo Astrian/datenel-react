@@ -60,6 +60,17 @@ export interface SingleWeekPickerProps {
 	 * @default undefined
 	 */
 	onClose?: () => void
+
+	/**
+		* Control the selected
+		* date programmatically, including situations like provide a default value or control the selected 
+		* date by parent component. When using the Date object, the week number related to the date will be
+		* applied to the panel.
+		* @example { weekYear: 2025, weekNum: 1 }
+		* @example new Date(2025, 0, 1)
+		* @default new Date()
+		*/
+		value?: { weekYear: number, weekNum: number } | Date
 }
 
 /**
@@ -70,7 +81,7 @@ export interface SingleWeekPickerProps {
  * 
  * @param 
  */
-export default ({ localization, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0', onClose, onSelect }: SingleWeekPickerProps) => {
+export default ({ localization, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0', onClose, onSelect, value }: SingleWeekPickerProps) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedWeek, setSelectedWeek] = useState<{ weekYear: number, weekNum: number }>(calculateWeekNum(new Date()))
@@ -119,10 +130,19 @@ export default ({ localization, mainColor = '#000000', accentColor = '#000000', 
 	}, [currentMonth, currentYear])
 
 	useEffect(() => {
-		const date = new Date(2033, 0, 1)
-		console.log(date)
-		console.log(calculateWeekNum(date))
-	}, [])
+		if (!value) return
+		if (!(value instanceof Date)) {
+			if (value.weekYear < 100) value.weekYear = Number(`20${value.weekYear}`)
+			if (value.weekNum < 1 || value.weekNum > 53)
+				return console.warn('Invalid value: Week number should be between 1 and 53.')
+		}
+		const date = value instanceof Date ? value : new Date(value.weekYear, 0, 1)
+		if ('weekNum' in value)
+			date.setDate(date.getDate() + (value.weekNum - 1) * 7)
+		setSelectedWeek(calculateWeekNum(date))
+		setCurrentMonth(date.getMonth())
+		setCurrentYear(date.getFullYear())
+	}, [value])
 
 	function selectWeek(date: Date) {
 		setSelectedWeek(calculateWeekNum(date))
