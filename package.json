@@ -32,13 +32,14 @@
     "vite-plugin-dts": "^4.5.0"
   },
   "exports": {
+    "types": "./dist/index.d.ts",
     "import": "./dist/index.es.js",
     "require": "./dist/index.cjs.js",
     "default": "./dist/index.es.js"
   },
-  "main": "dist/index.umd.js",
+  "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "files": [
     "dist"
   ]
