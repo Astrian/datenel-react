@@ -27,5 +27,9 @@
     "typescript-eslint": "^8.22.0",
     "vite": "^6.1.0",
     "vite-plugin-dts": "^4.5.0"
+  },
+  "exports": {
+    "import": "./dist/datenel.es.js",
+    "require": "./dist/index.umd.js"
   }
 }
