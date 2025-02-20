@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - dev
 
 jobs:
   publish:
@@ -22,7 +23,24 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Determine package name
+        id: package_name
+        run: |
+          if [ "${{ gitea.ref }}" == "refs/heads/main" ]; then
+            echo "PACKAGE_NAME=datenel-react" >> $GITEA_ENV
+            echo "ACCESS_LEVEL=public" >> $GITEA_ENV
+          elif [ "${{ gitea.ref }}" == "refs/heads/dev" ]; then
+            echo "PACKAGE_NAME=@astrian/datenel-react-dev" >> $GITEA_ENV
+            echo "ACCESS_LEVEL=restricted" >> $GITEA_ENV
+          fi
+
+      - name: Update package.json for dev releases
+        if: GITEA.ref == 'refs/heads/dev'
+        run: |
+          jq --arg name "@astrian/datenel-react-dev" '.name=$name' package.json > temp.json && mv temp.json package.json
+          jq --arg version "0.0.0-dev.$(date +%s)" '.version=$version' package.json > temp.json && mv temp.json package.json
+
       - name: Publish to npm
-        run: npm publish
+        run: npm publish --access $ACCESS_LEVEL
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
