@@ -20,7 +20,8 @@ export default defineConfig(({mode}) => ({
     },
   },
   plugins: [react(), dts({
-    insertTypesEntry: true
+    insertTypesEntry: true,
+    logLevel: "info"
   })],
   resolve: {
     alias: {

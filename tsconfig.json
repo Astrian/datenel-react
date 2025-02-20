@@ -9,6 +9,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
-    }
-  }
+    },
+    "declaration": true,
+    "outDir": "./dist"
+  },
+  "include": ["src/**/*", "tsconfig.app.json", "tsconfig.node.json"]
 }

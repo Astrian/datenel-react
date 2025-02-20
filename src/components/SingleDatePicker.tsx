@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { getCalendarDates, getL10Weekday, generateUniqueId, applyColor } from '../utils'
 
-interface Props {
+export interface SingleDatePickerProps {
 	/**
 	 	* Control the selected
 		* date programmatically, including situations like provide a default value or control the selected 
@@ -78,9 +78,9 @@ interface Props {
  * 
  * @component
  * 
- * @param {Props} props
+ * @param {SingleDatePickerProps} props
  */
-export default ({ value, onSelect, localization, onClose, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0' }: Props) => {
+const SingleDatePicker: React.FC = ({ value, onSelect, localization, onClose, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0' }: SingleDatePickerProps) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedDate, setSelectedDate] = useState(new Date())
@@ -225,3 +225,5 @@ export default ({ value, onSelect, localization, onClose, mainColor = '#000000',
 		</div>
 	)
 }
+
+export default SingleDatePicker
