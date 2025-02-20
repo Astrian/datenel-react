@@ -71,6 +71,38 @@
 		&.grid{
 			display: grid;
 			grid-template-columns: repeat(7, 1fr);
+			.item.date {
+				border-radius: 50%;
+				position: relative;
+				&.extra-month {
+					cursor: default;
+				}
+				.today-indicator {
+					position: absolute;
+					bottom: 0.25rem;
+					width: 0.25rem;
+					height: 0.25rem;
+				}
+	
+				&.active {
+					background: var(--datenel-accent-color);
+					color: var(--datenel-reversed-color);
+				}
+			}
+		}
+		&.flex {
+			display: flex;
+			flex-direction: column;
+			.listitem {
+				padding: 0;
+				display: grid;
+				grid-template-columns: repeat(7, 1fr);
+				border-radius: 1rem;
+				.item.date {
+					background: none;
+				}
+			}
+			
 		}
 		.item {
 			width: 2rem;
@@ -79,33 +111,15 @@
 			justify-content: center;
 			align-items: center;
 			font-size: 0.75rem;
-		}
-		.item.day-indicator {
-			opacity: 0.5;
-		}
-
-		button.item.date {
-			border-radius: 50%;
-			position: relative;
 			&.extra-month {
 				opacity: 0.3;
-				cursor: default;
 			}
-			&:hover {
-				background: var(--datenel-hover-color);
-			}
-			.today-indicator {
-				position: absolute;
-				bottom: 0.25rem;
-				width: 0.25rem;
-				height: 0.25rem;
-			}
-
-			&.active {
-				background: var(--datenel-accent-color);
-				color: var(--datenel-reversed-color);
+			&.day-indicator {
+				opacity: 0.5;
 			}
 		}
+
+		
 	}
 
 	.month-selector-body {
