@@ -1,16 +1,16 @@
 {
   "name": "datenel-react",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
   },
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",
@@ -26,10 +26,18 @@
     "typescript": "~5.7.2",
     "typescript-eslint": "^8.22.0",
     "vite": "^6.1.0",
-    "vite-plugin-dts": "^4.5.0"
+    "vite-plugin-dts": "^4.5.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "exports": {
     "import": "./dist/datenel.es.js",
-    "require": "./dist/index.umd.js"
-  }
+    "require": "./dist/index.cjs.js",
+    "types": "./dist/index.d.ts",
+    "default": "./dist/datenel.es.js"
+  },
+  "main": "dist/index.cjs.js",
+  "module": "dist/datenel.es.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"]
 }
