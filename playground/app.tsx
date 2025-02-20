@@ -4,14 +4,13 @@ import './app.scss'
 
 export default () => {
 
-	function onSelect(value) {
-		alert(`You select ${value.weekYear} - ${value.weekNum}`)
-	}
-
 	return (<div className='app'>
 		<div className="border">
 			<div>
-				<SingleWeekPicker onSelect={onSelect} />
+				<SingleWeekPicker />
+			</div>
+			<div>
+				<SingleDatePicker />
 			</div>
 		</div>
 	</div>)
