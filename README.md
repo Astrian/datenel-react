@@ -64,6 +64,15 @@ export default () => {
 
 More features are on the roadmap.
 
+## Contribution & Development
+
+```zsh
+npm i # or `yarn`
+npm run dev # or `yarn dev`
+```
+
+Then the package will launch a testing React hot-reload server in `localhost:1926`. The server file available in `playground` folder, feel free to modify content inside it.
+
 ## License
 
 MIT
