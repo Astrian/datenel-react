@@ -1,6 +1,6 @@
 {
   "name": "datenel-react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -26,8 +26,8 @@
     "vite-plugin-dts": "^4.5.0"
   },
   "peerDependencies": {
-    "react": "^18.0.0 || ^19.0.0",
-    "react-dom": "^18.0.0 || ^19.0.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "exports": {
     "types": "./dist/src/index.d.ts",
