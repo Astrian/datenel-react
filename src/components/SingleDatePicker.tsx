@@ -70,6 +70,24 @@ export interface SingleDatePickerProps {
 	 *@default '#e0e0e0'
 	 */
 	borderColor?: string
+
+	/**
+	 * Limit a range of dates that can be selected. It should be an array of two dates, which the first
+	 * one is the available range start date, and the second one is the available range end date. 
+	 * 
+	 * If the first one is null, it means that the all dates after the second one is not available. If the second
+	 * one is null, it means that the all dates before the first one is not available. 
+	 * 
+	 * If the first one is behind the second one, Datenel will exchange them automatically.
+	 * 
+	 * The parameter will be ignored if the array length is not 2.
+	 * @example [new Date(2025, 0, 1), new Date(2025, 11, 31)]
+	 * @example [new Date(2025, 0, 1), null]
+	 * @example [null, new Date(2025, 11, 31)]
+	 * @example [new Date(2025, 11, 31), new Date(2025, 0, 1)]
+	 * @default undefined
+	 */
+	availableRange?: [(Date | { year: number, month: number, day: number } | null), (Date | { year: number, month: number, day: number } | null)]
 }
 
 /**
@@ -80,7 +98,7 @@ export interface SingleDatePickerProps {
  * 
  * @param {SingleDatePickerProps} props
  */
-const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, localization, onClose, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0' }: SingleDatePickerProps) => {
+const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, localization, onClose, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0', availableRange: inputAvailableRange }: SingleDatePickerProps) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
 	const [currentYear, setCurrentYear] = useState(new Date().getFullYear())
 	const [selectedDate, setSelectedDate] = useState(new Date())
@@ -88,6 +106,8 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 	const [l10nDays, setL10nDays] = useState<string[]>([])
 	const [selectMonth, setSelectMonth] = useState(false)
 	const uniqueId = generateUniqueId()
+	const [availableRangeStart, setAvailableRangeStart] = useState<Date | null>(null)
+	const [availableRangeEnd, setAvailableRangeEnd] = useState<Date | null>(null)
 
 	useEffect(() => {
 		setDates(getCalendarDates(currentMonth, currentYear))
@@ -122,6 +142,46 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 			borderColor: borderColor
 		})
 	}, [mainColor, accentColor, reversedColor, hoverColor, borderColor])
+
+	useEffect(() => {
+		if (!inputAvailableRange) {
+			setAvailableRangeEnd(null)
+			setAvailableRangeStart(null)
+			return
+		}
+		if (inputAvailableRange.length !== 2) {
+			console.warn('Invalid availableRange: The length of the array should be 2. The parameter will be ignored.')
+			setAvailableRangeEnd(null)
+			setAvailableRangeStart(null)
+			return
+		}
+		const [start, end] = inputAvailableRange
+		if (start && end) {
+			const inputStart = !(start instanceof Date) ? new Date(start.year, start.month - 1, start.day) : start
+			const inputEnd = !(end instanceof Date) ? new Date(end.year, end.month - 1, end.day) : end
+			if (inputStart > inputEnd) {
+				setAvailableRangeStart(inputEnd)
+				setAvailableRangeEnd(inputStart)
+			} else {
+				setAvailableRangeStart(inputStart)
+				setAvailableRangeEnd(inputEnd)
+			}
+		}
+		else if (start && !end) {
+			if (!(start instanceof Date)) setAvailableRangeStart(new Date(start.year, start.month - 1, start.day))
+			else setAvailableRangeStart(start)
+			setAvailableRangeEnd(null)
+		}
+		else if (!start && end) {
+			if (!(end instanceof Date)) setAvailableRangeEnd(new Date(end.year, end.month - 1, end.day))
+			else setAvailableRangeEnd(end)
+			setAvailableRangeStart(null)
+		}
+		else {
+			setAvailableRangeStart(null)
+			setAvailableRangeEnd(null)
+		}
+	}, [inputAvailableRange])
 
 	function selectDate(date: Date) {
 		setSelectedDate(date)
@@ -177,12 +237,30 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 			</div>
 			<div className='body'>
 				<div className='month-selector-body'>
-					{Array.from({ length: 12 }).map((_, index) => <button className={`item`} key={index} onClick={() => {
-						setCurrentMonth(index)
-						setSelectMonth(false)
-					}} aria-label={`Go to ${new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })} of the year ${currentYear}`}>
-						{new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })}
-					</button>)}
+					{Array.from({ length: 12 }).map((_, index) => {
+						function calculateNotAvailable() {
+							// When the last day of a month not inside the range of available dates
+							const lastDayOfMonth = new Date(currentYear, index + 1, 0)
+							if (availableRangeStart && lastDayOfMonth < availableRangeStart) return true
+							// When the first day of a month not inside the range of available dates
+							const firstDayOfMonth = new Date(currentYear, index, 1)
+							if (availableRangeEnd && firstDayOfMonth > availableRangeEnd) return true
+							return false
+						}
+						return <button
+							className={`item ${calculateNotAvailable() && 'not-available'}`}
+							key={index}
+							onClick={() => {
+								setCurrentMonth(index)
+								setSelectMonth(false)
+							}}
+							aria-label={`Go to ${new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })} of the year ${currentYear}`}
+							disabled={calculateNotAvailable()}
+							aria-hidden={calculateNotAvailable()}
+						>
+							{new Date(currentYear, index).toLocaleString(localization || navigator.language, { month: 'long' })}
+						</button>
+					})}
 				</div>
 			</div>
 			{!!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button>}
@@ -201,18 +279,21 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 				<div className='calendar-view-body grid' aria-live="polite">
 					{l10nDays.map((day, index) => <div className='item day-indicator' key={index}>{day}</div>)}
 
-					{dates.map(date => <button
-						className={`item date ${currentMonth !== date.getMonth() && 'extra-month'} ${selectedDate.toDateString() === date.toDateString() && 'active'}`}
-						key={date.toISOString()}
-						onClick={() => selectDate(date)}
-						aria-label={`${date.toLocaleString(localization || navigator.language, { dateStyle: 'full' })}${date.toDateString() === new Date().toDateString() ? ", this is today" : ""}, click to select this date`}
-						tabIndex={currentMonth !== date.getMonth() ? -1 : 0}
-						aria-hidden={currentMonth !== date.getMonth()}
-						disabled={currentMonth !== date.getMonth()}
-					>
-						{date.getDate()}
-						{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
-					</button>)}
+					{dates.map(date => {
+						const notAvailable = (availableRangeStart && date < availableRangeStart) || (availableRangeEnd && date > availableRangeEnd) || currentMonth !== date.getMonth()
+						return <button
+							className={`item date ${notAvailable && 'not-available'} ${selectedDate.toDateString() === date.toDateString() && 'active'}`}
+							key={date.toISOString()}
+							onClick={() => selectDate(date)}
+							aria-label={`${date.toLocaleString(localization || navigator.language, { dateStyle: 'full' })}${date.toDateString() === new Date().toDateString() ? ", this is today" : ""}, click to select this date`}
+							tabIndex={currentMonth !== date.getMonth() ? -1 : 0}
+							aria-hidden={notAvailable}
+							disabled={notAvailable}
+						>
+							{date.getDate()}
+							{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
+						</button>
+					})}
 				</div>
 			</div>
 			{!!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button>}

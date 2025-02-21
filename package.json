@@ -1,6 +1,6 @@
 {
   "name": "datenel-react",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -40,5 +40,15 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Astrian/datenel-react"
+  },
+  "additionalRepositories": [
+    {
+      "type": "git",
+      "url": "https://git.nas.astrian.moe/Astrian/datenel-react"
+    }
   ]
 }

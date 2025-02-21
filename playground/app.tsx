@@ -6,7 +6,15 @@ export default () => {
 
 	return (<div className='app'>
 		<div className="border">
-			<SingleWeekPicker value={new Date(2025, 0, 1)} onSelect={(date) => console.log(date)} />
+			<SingleDatePicker availableRange={[{
+				year: 2025,
+				month: 1,
+				day: 15
+			}, {
+				year: 2025,
+				month: 11,
+				day: 15
+			}]} />
 		</div>
 	</div>)
 }
