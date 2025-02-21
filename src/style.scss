@@ -49,6 +49,7 @@
 			&.indicator {
 				padding: 0.25rem 0.5rem;
 				border-radius: 0.25rem;
+				font-size: 0.75rem;
 			}
 		}
 
@@ -60,6 +61,8 @@
 			border-radius: 0.25rem;
 			padding: 0.25rem 0;
 			color: var(--datenel-main-color);
+			width: 4rem;
+			font-size: 0.75rem;
 
 			&:hover {
 				background: var(--datenel-hover-color);
@@ -152,6 +155,7 @@
 			.item {
 				border-radius: 0.25rem;
 				height: 2rem;
+				padding: 0 0.5rem;
 			}
 		}
 
