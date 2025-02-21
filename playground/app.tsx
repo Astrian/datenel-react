@@ -7,13 +7,13 @@ export default () => {
 	return (<div className='app'>
 		<div className="border">
 			<SingleDatePicker availableRange={[{
-				year: 2023,
+				year: 2025,
 				month: 1,
-				day: 1
+				day: 15
 			}, {
-				year: 2023,
-				month: 12,
-				day: 31
+				year: 2025,
+				month: 11,
+				day: 15
 			}]} />
 		</div>
 	</div>)
