@@ -83,7 +83,7 @@
 				.item.date {
 					border-radius: 50%;
 
-					&.extra-month {
+					&.extra-month, &.not-available {
 						cursor: default;
 					}
 
@@ -112,7 +112,7 @@
 						background: var(--datenel-accent-color);
 						color: var(--datenel-reversed-color);
 
-						.extra-month {
+						.extra-month, .not-available {
 							opacity: 0.5;
 						}
 					}
@@ -129,8 +129,11 @@
 				font-size: 0.75rem;
 				position: relative;
 
-				&.extra-month {
+				&.extra-month, &.not-available {
 					opacity: 0.3;
+					&:hover {
+						background: none;
+					};
 				}
 
 				&.day-indicator {
@@ -156,6 +159,14 @@
 				border-radius: 0.25rem;
 				height: 2rem;
 				padding: 0 0.5rem;
+
+				&.not-available {
+					opacity: 0.3;
+					cursor: default;
+					&:hover {
+						background: none;
+					};
+				}
 			}
 		}
 
