@@ -1,4 +1,4 @@
-.datenel-component {
+.__datenel_datenel-component {
 	user-select: none;
 	color: var(--datenel-main-color);
 
@@ -13,7 +13,7 @@
 		}
 	}
 
-	button.sr-only {
+	button.__datenel_sr-only {
 		position: absolute;
 		width: 1px;
 		height: 1px;
@@ -24,7 +24,7 @@
 		border: 0;
 	}
 
-	.header {
+	.__datenel_header {
 		padding: 0.75rem;
 		display: flex;
 		justify-content: space-between;
@@ -37,7 +37,7 @@
 				height: 1rem;
 			}
 
-			&.stepper {
+				&.__datenel_stepper {
 				width: 1.75rem;
 				height: 1.75rem;
 				display: flex;
@@ -46,14 +46,14 @@
 				border-radius: 50%;
 			}
 
-			&.indicator {
+				&.__datenel_indicator {
 				padding: 0.25rem 0.5rem;
 				border-radius: 0.25rem;
 				font-size: 0.75rem;
 			}
 		}
 
-		input.indicator {
+		input.__datenel_indicator {
 			border: none;
 			background: none;
 			text-align: center;
@@ -70,49 +70,49 @@
 		}
 	}
 
-	.body {
+	.__datenel_body {
 		display: flex;
-		.calendar-view-body {
+		.__datenel_calendar-view-body {
 			padding: 0.75rem;
 			gap: 0.125rem;
 
-			&.grid {
+			&.__datenel_grid {
 				display: grid;
 				grid-template-columns: repeat(7, 1fr);
 
-				.item.date {
+				.__datenel_item.__datenel_date {
 					border-radius: 50%;
 
-					&.extra-month, &.not-available {
+					&.__datenel_extra-month, &.__datenel_not-available {
 						cursor: default;
 					}
 
-					&.active {
+					&.__datenel_active {
 						background: var(--datenel-accent-color);
 						color: var(--datenel-reversed-color);
 					}
 				}
 			}
 
-			&.flex {
+			&.__datenel_flex {
 				display: flex;
 				flex-direction: column;
 
-				.listitem {
+				.__datenel_listitem {
 					padding: 0;
 					display: grid;
 					grid-template-columns: repeat(7, 1fr);
 					border-radius: 1rem;
 
-					.item.date {
+					.__datenel_item.__datenel_date {
 						background: none;
 					}
 
-					&.active {
+					&.__datenel_active {
 						background: var(--datenel-accent-color);
 						color: var(--datenel-reversed-color);
 
-						.extra-month, .not-available {
+						.__datenel_extra-month, .__datenel_not-available {
 							opacity: 0.5;
 						}
 					}
@@ -120,7 +120,7 @@
 
 			}
 
-			.item {
+			.__datenel_item {
 				width: 2rem;
 				height: 2rem;
 				display: flex;
@@ -129,18 +129,18 @@
 				font-size: 0.75rem;
 				position: relative;
 
-				&.extra-month, &.not-available {
+				&.__datenel_extra-month, &.__datenel_not-available {
 					opacity: 0.3;
 					&:hover {
 						background: none;
 					};
 				}
 
-				&.day-indicator {
+				&.__datenel_day-indicator {
 					opacity: 0.5;
 				}
 
-				.today-indicator {
+				.__datenel_today-indicator {
 					position: absolute;
 					bottom: 0.25rem;
 					width: 0.25rem;
@@ -149,18 +149,18 @@
 			}
 		}
 
-		.month-selector-body {
+		.__datenel_month-selector-body {
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
 			padding: 0.75rem;
 			gap: 0.125rem;
 
-			.item {
+			.__datenel_item {
 				border-radius: 0.25rem;
 				height: 2rem;
 				padding: 0 0.5rem;
 
-				&.not-available {
+				&.__datenel_not-available {
 					opacity: 0.3;
 					cursor: default;
 					&:hover {
@@ -170,14 +170,14 @@
 			}
 		}
 
-		.week-indicator {
+		.__datenel_week-indicator {
 			display: flex;
 			flex-direction: column;
 			border-right: 1px solid var(--datenel-border-color);
 			gap: 0.125rem;
 			padding: 0.75rem;
 
-			.item {
+			.__datenel_item {
 				font-size: 0.75rem;
 				width: 2rem;
 				height: 2rem;
@@ -187,10 +187,10 @@
 				border-radius: 50%;
 			}
 
-			.item.title {
+			.__datenel_item.__datenel_title {
 				opacity: 0.5;
 			}
-			.item.active {
+			.__datenel_item.__datenel_active {
 				background: var(--datenel-accent-color);
 				color: var(--datenel-reversed-color);
 			}

@@ -3,10 +3,15 @@ import { getCalendarDates, getL10Weekday, generateUniqueId, applyColor } from '.
 
 export interface SingleDatePickerProps {
 	/**
-			* Control the selected
+	 	* Value of the selected date.
+		* 
+		* @description Control the selected
 		* date programmatically, including situations like provide a default value or control the selected 
 		* date by parent component. Use 1-12 for month, instead of 0-11, if you are using object to set the
 		* value.
+		* 
+		* @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#value}
+		* 
 		* @example { year: 2025, month: 1, day: 1 }
 		* @example new Date(2025, 0, 1)
 		* @default new Date()
@@ -14,7 +19,12 @@ export interface SingleDatePickerProps {
 	value?: Date | { year: number, month: number, day: number }
 
 	/**
-	 * A callback function that will be called when a date is selected inside the panel.
+	 * Event handler when a date is selected.
+	 * @description A callback function that will be called when a date is selected inside the panel.
+	 * The returned month and day are 1-12 instead of 0-11.
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#onselect-date-void}
+	 * 
 	 * @param {{ year: number, month: number, day: number }} - The date user selected.
 	 * @example { year: 2025, month: 1, day: 1 } // User selected 1 Jan 2025
 	 */
@@ -25,62 +35,82 @@ export interface SingleDatePickerProps {
 	}) => void
 
 	/**
-	 * The language code that will be used to localize the panel.
+	 * Localization
+	 * @description The language code that will be used to localize the panel.
+	 * 
 	 * Accept standard ISO 639-1 language code, such as 'zh-CN', 'en-US', 'ja-JP', etc. Note 
 	 * that it will not effect to the screen reader, but the screen reader will still read the 
 	 * date in the user’s language.
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#localization}
 	 * @default navigator.language
 	 */
 	localization?: string
 
 	/**
-	 * User requires to close the panel without select a specific date. Note that the close button is not 
-	 * visible, but can be read by screen reader. The close button for the screen reader is only available
-	 * when this prop is not `undefined`.
+	 * Event handler when the panel is closed.
+	 * @description User requires to close the panel without select a specific date. Note 
+	 * that the close button is not visible, but can be read by screen reader. The close 
+	 * button for the screen reader is only available when this prop is not `undefined`.
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#onclose-void}
+	 * 
 	 * @default undefined
 	 */
 	onClose?: () => void
 
 	/**
-	 * The main color of the panel, including the text color and the border color.
-	 *@default '#000000'
+	 * Main color of the panel
+	 * @description The main color of the panel, including the text color and the border color.
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#maincolor}
+	 * 
+	 * @default '#000000'
 	 */
 	mainColor?: string
 
 	/**
-	 * The accent color of the panel, including the background color of the selected date.
-	 *@default '#000000'
+	 * Accent color of the panel
+	 * @description The accent color of the panel, including the background color of the selected date.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#accentcolor}
+	 * @default '#000000'
 	 */
 	accentColor?: string
 
 	/**
-	 * The reversed color of the panel, including the text color of the selected date.
-	 *@default '#ffffff'
+	 * Reversed color of the panel
+	 * @description The reversed color of the panel, including the text color of the selected date.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#reversedcolor}
+	 * @default '#ffffff'
 	 */
 	reversedColor?: string
 
 	/**
-	 * The hover color of the panel, including the hover background color of the date.
-	 *@default '#00000017'
+	 * Hover color of the panel
+	 * @description The hover color of the panel, including the hover background color of the date.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#hovercolor}
+	 * @default '#00000017'
 	 */
 	hoverColor?: string
 
 	/**
-	 * The border color of the panel, including the divider color between the header and the body.
-	 *@default '#e0e0e0'
+	 * Border color of the panel
+	 * @description The border color of the panel, including the divider color between the header and the body.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#bordercolor}
+	 * @default '#e0e0e0'
 	 */
 	borderColor?: string
 
 	/**
-	 * Limit a range of dates that can be selected. It should be an array of two dates, which the first
+	 * Available range of dates
+	 * 
+	 * @description Limit a range of dates that can be selected. It should be an array of two dates, which the first
 	 * one is the available range start date, and the second one is the available range end date. 
 	 * 
-	 * If the first one is null, it means that the all dates after the second one is not available. If the second
-	 * one is null, it means that the all dates before the first one is not available. 
-	 * 
-	 * If the first one is behind the second one, Datenel will exchange them automatically.
-	 * 
 	 * The parameter will be ignored if the array length is not 2.
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#availablerange}
+	 * 
 	 * @example [new Date(2025, 0, 1), new Date(2025, 11, 31)]
 	 * @example [new Date(2025, 0, 1), null]
 	 * @example [null, new Date(2025, 11, 31)]
@@ -92,9 +122,12 @@ export interface SingleDatePickerProps {
 
 /**
  * SingleDatePicker
- * A panel that allows users to select a date.
+ * @description A panel that allows users to select a date. Check out the online documentation for
+ * interactive examples and more details.
  * 
  * @component
+ * 
+ * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html}
  * 
  * @param {SingleDatePickerProps} props
  */
@@ -219,24 +252,24 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 	}
 
 	if (selectMonth) return (
-		<div className='datenel-component' role="dialog" aria-label="Date selection panel, you are now at month and year quick-select" id={`__datenel-${uniqueId}`}>
-			<div className='header'>
-				<button className='stepper' onClick={() => {
+		<div className='__datenel_datenel-component' role="dialog" aria-label="Date selection panel, you are now at month and year quick-select" id={`__datenel-${uniqueId}`}>
+			<div className='__datenel_header'>
+				<button className='__datenel_stepper' onClick={() => {
 					if (currentYear <= 100) return
 					setCurrentYear(currentYear - 1)
 				}} aria-label={`Go to last year, ${currentYear - 1}, you are now at year ${currentYear}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg></button>
-				<input className='indicator'
+				<input className='__datenel_indicator'
 					value={currentYear}
 					onChange={e => changeYear(e.target.value)}
 					onBlur={adjustYear}
 					aria-label="Year input, type a year to go to that year"
 				/>
-				<button className='stepper' onClick={() => {
+				<button className='__datenel_stepper' onClick={() => {
 					setCurrentYear(currentYear + 1)
 				}} aria-label={`Go to next year, ${currentYear + 1}, you are now at year ${currentYear}`}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></button>
 			</div>
-			<div className='body'>
-				<div className='month-selector-body'>
+			<div className='__datenel_body'>
+				<div className='__datenel_month-selector-body'>
 					{Array.from({ length: 12 }).map((_, index) => {
 						function calculateNotAvailable() {
 							// When the last day of a month not inside the range of available dates
@@ -248,7 +281,7 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 							return false
 						}
 						return <button
-							className={`item ${calculateNotAvailable() && 'not-available'}`}
+							className={`__datenel_item ${calculateNotAvailable() && '__datenel_not-available'}`}
 							key={index}
 							onClick={() => {
 								setCurrentMonth(index)
@@ -263,26 +296,26 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 					})}
 				</div>
 			</div>
-			{!!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button>}
+			{!!onClose && <button className='__datenel_sr-only' onClick={onClose}>Close the panel</button>}
 		</div>
 	)
 	else return (
-		<div className='datenel-component' role="dialog" aria-label="Date selection panel" id={`__datenel-${uniqueId}`}>
-			<div className='header'>
-				<button className='stepper' onClick={skipToLastMonth} aria-label={`Go to last month, ${new Date(currentYear, currentMonth - 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg></button>
-				<button className='indicator' onClick={() => setSelectMonth(true)} aria-label={`You are now at ${new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}. Click here to quick-select month or year.`}>
+		<div className='__datenel_datenel-component' role="dialog" aria-label="Date selection panel" id={`__datenel-${uniqueId}`}>
+			<div className='__datenel_header'>
+				<button className='__datenel_stepper' onClick={skipToLastMonth} aria-label={`Go to last month, ${new Date(currentYear, currentMonth - 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg></button>
+				<button className='__datenel_indicator' onClick={() => setSelectMonth(true)} aria-label={`You are now at ${new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}. Click here to quick-select month or year.`}>
 					{new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}
 				</button>
-				<button className='stepper' onClick={skipToNextMonth} aria-label={`Go to next month, ${new Date(currentYear, currentMonth + 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></button>
+				<button className='__datenel_stepper' onClick={skipToNextMonth} aria-label={`Go to next month, ${new Date(currentYear, currentMonth + 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></button>
 			</div>
-			<div className='body'>
-				<div className='calendar-view-body grid' aria-live="polite">
-					{l10nDays.map((day, index) => <div className='item day-indicator' key={index}>{day}</div>)}
+			<div className='__datenel_body'>
+				<div className='__datenel_calendar-view-body __datenel_grid' aria-live="polite">
+					{l10nDays.map((day, index) => <div className='__datenel_item __datenel_day-indicator' key={index}>{day}</div>)}
 
 					{dates.map(date => {
 						const notAvailable = (availableRangeStart && date < availableRangeStart) || (availableRangeEnd && date > availableRangeEnd) || currentMonth !== date.getMonth()
 						return <button
-							className={`item date ${notAvailable && 'not-available'} ${selectedDate.toDateString() === date.toDateString() && 'active'}`}
+							className={`__datenel_item __datenel_date ${notAvailable && '__datenel_not-available'} ${selectedDate.toDateString() === date.toDateString() && '__datenel_active'}`}
 							key={date.toISOString()}
 							onClick={() => selectDate(date)}
 							aria-label={`${date.toLocaleString(localization || navigator.language, { dateStyle: 'full' })}${date.toDateString() === new Date().toDateString() ? ", this is today" : ""}, click to select this date`}
@@ -291,12 +324,12 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 							disabled={notAvailable}
 						>
 							{date.getDate()}
-							{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
+							{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='__datenel_today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
 						</button>
 					})}
 				</div>
 			</div>
-			{!!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button>}
+			{!!onClose && <button className='__datenel_sr-only' onClick={onClose}>Close the panel</button>}
 		</div>
 	)
 }
