@@ -33,7 +33,6 @@ yarn add datenel-react # Use yarn
 Here is an example of how to use Datenel in your React application:
 
 ```tsx
-import React from 'react'
 import { SingleDatePicker } from 'datenel-react'
 
 export default () => {
@@ -41,22 +40,18 @@ export default () => {
     alert(`You selected ${value.year}-${value-month}-${value.day}`)
   }
 
-  return (
-    <div className='app'>
-      <div className="border">
-        <SingleDatePicker 
-          value={{
-            year: 2025,
-            month: 1,
-            day: 1
-          }}
-          onSelect={onSelect}
-        />
-      </div>
-    </div>
-  )
+  return <SingleDatePicker 
+    value={{
+      year: 2025,
+      month: 1,
+      day: 1
+    }}
+    onSelect={onSelect}
+  />
 }
 ```
+
+For more information and live demo, refer to [Datenel’s documentation](https://datenel.js.org/guide/react/gettingstart.html).
 
 ## Supported Components & Props
 
