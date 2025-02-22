@@ -219,24 +219,24 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 	}
 
 	if (selectMonth) return (
-		<div className='datenel-component' role="dialog" aria-label="Date selection panel, you are now at month and year quick-select" id={`__datenel-${uniqueId}`}>
-			<div className='header'>
-				<button className='stepper' onClick={() => {
+		<div className='__datenel_datenel-component' role="dialog" aria-label="Date selection panel, you are now at month and year quick-select" id={`__datenel-${uniqueId}`}>
+			<div className='__datenel_header'>
+				<button className='__datenel_stepper' onClick={() => {
 					if (currentYear <= 100) return
 					setCurrentYear(currentYear - 1)
 				}} aria-label={`Go to last year, ${currentYear - 1}, you are now at year ${currentYear}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg></button>
-				<input className='indicator'
+				<input className='__datenel_indicator'
 					value={currentYear}
 					onChange={e => changeYear(e.target.value)}
 					onBlur={adjustYear}
 					aria-label="Year input, type a year to go to that year"
 				/>
-				<button className='stepper' onClick={() => {
+				<button className='__datenel_stepper' onClick={() => {
 					setCurrentYear(currentYear + 1)
 				}} aria-label={`Go to next year, ${currentYear + 1}, you are now at year ${currentYear}`}> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></button>
 			</div>
-			<div className='body'>
-				<div className='month-selector-body'>
+			<div className='__datenel_body'>
+				<div className='__datenel_month-selector-body'>
 					{Array.from({ length: 12 }).map((_, index) => {
 						function calculateNotAvailable() {
 							// When the last day of a month not inside the range of available dates
@@ -248,7 +248,7 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 							return false
 						}
 						return <button
-							className={`item ${calculateNotAvailable() && 'not-available'}`}
+							className={`__datenel_item ${calculateNotAvailable() && '__datenel_not-available'}`}
 							key={index}
 							onClick={() => {
 								setCurrentMonth(index)
@@ -263,26 +263,26 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 					})}
 				</div>
 			</div>
-			{!!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button>}
+			{!!onClose && <button className='__datenel_sr-only' onClick={onClose}>Close the panel</button>}
 		</div>
 	)
 	else return (
-		<div className='datenel-component' role="dialog" aria-label="Date selection panel" id={`__datenel-${uniqueId}`}>
-			<div className='header'>
-				<button className='stepper' onClick={skipToLastMonth} aria-label={`Go to last month, ${new Date(currentYear, currentMonth - 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg></button>
-				<button className='indicator' onClick={() => setSelectMonth(true)} aria-label={`You are now at ${new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}. Click here to quick-select month or year.`}>
+		<div className='__datenel_datenel-component' role="dialog" aria-label="Date selection panel" id={`__datenel-${uniqueId}`}>
+			<div className='__datenel_header'>
+				<button className='__datenel_stepper' onClick={skipToLastMonth} aria-label={`Go to last month, ${new Date(currentYear, currentMonth - 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M10.8284 12.0007L15.7782 16.9504L14.364 18.3646L8 12.0007L14.364 5.63672L15.7782 7.05093L10.8284 12.0007Z"></path></svg></button>
+				<button className='__datenel_indicator' onClick={() => setSelectMonth(true)} aria-label={`You are now at ${new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}. Click here to quick-select month or year.`}>
 					{new Date(currentYear, currentMonth).toLocaleString(localization || navigator.language, { month: 'long', year: 'numeric' })}
 				</button>
-				<button className='stepper' onClick={skipToNextMonth} aria-label={`Go to next month, ${new Date(currentYear, currentMonth + 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></button>
+				<button className='__datenel_stepper' onClick={skipToNextMonth} aria-label={`Go to next month, ${new Date(currentYear, currentMonth + 1).toLocaleString(localization || navigator.language, { month: 'long' })}`}><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M13.1717 12.0007L8.22192 7.05093L9.63614 5.63672L16.0001 12.0007L9.63614 18.3646L8.22192 16.9504L13.1717 12.0007Z"></path></svg></button>
 			</div>
-			<div className='body'>
-				<div className='calendar-view-body grid' aria-live="polite">
-					{l10nDays.map((day, index) => <div className='item day-indicator' key={index}>{day}</div>)}
+			<div className='__datenel_body'>
+				<div className='__datenel_calendar-view-body __datenel_grid' aria-live="polite">
+					{l10nDays.map((day, index) => <div className='__datenel_item __datenel_day-indicator' key={index}>{day}</div>)}
 
 					{dates.map(date => {
 						const notAvailable = (availableRangeStart && date < availableRangeStart) || (availableRangeEnd && date > availableRangeEnd) || currentMonth !== date.getMonth()
 						return <button
-							className={`item date ${notAvailable && 'not-available'} ${selectedDate.toDateString() === date.toDateString() && 'active'}`}
+							className={`__datenel_item __datenel_date ${notAvailable && '__datenel_not-available'} ${selectedDate.toDateString() === date.toDateString() && '__datenel_active'}`}
 							key={date.toISOString()}
 							onClick={() => selectDate(date)}
 							aria-label={`${date.toLocaleString(localization || navigator.language, { dateStyle: 'full' })}${date.toDateString() === new Date().toDateString() ? ", this is today" : ""}, click to select this date`}
@@ -291,12 +291,12 @@ const SingleDatePicker: React.FC<SingleDatePickerProps> = ({ value, onSelect, lo
 							disabled={notAvailable}
 						>
 							{date.getDate()}
-							{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
+							{date.toDateString() === new Date().toDateString() && <svg xmlns="http://www.w3.org/2000/svg" className='__datenel_today-indicator' viewBox="0 0 24 24" fill="currentColor"><path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"></path></svg>}
 						</button>
 					})}
 				</div>
 			</div>
-			{!!onClose && <button className='sr-only' onClick={onClose}>Close the panel</button>}
+			{!!onClose && <button className='__datenel_sr-only' onClick={onClose}>Close the panel</button>}
 		</div>
 	)
 }
