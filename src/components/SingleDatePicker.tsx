@@ -3,10 +3,15 @@ import { getCalendarDates, getL10Weekday, generateUniqueId, applyColor } from '.
 
 export interface SingleDatePickerProps {
 	/**
-			* Control the selected
+	 	* Value of the selected date.
+		* 
+		* @description Control the selected
 		* date programmatically, including situations like provide a default value or control the selected 
 		* date by parent component. Use 1-12 for month, instead of 0-11, if you are using object to set the
 		* value.
+		* 
+		* @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#value}
+		* 
 		* @example { year: 2025, month: 1, day: 1 }
 		* @example new Date(2025, 0, 1)
 		* @default new Date()
@@ -14,7 +19,12 @@ export interface SingleDatePickerProps {
 	value?: Date | { year: number, month: number, day: number }
 
 	/**
-	 * A callback function that will be called when a date is selected inside the panel.
+	 * Event handler when a date is selected.
+	 * @description A callback function that will be called when a date is selected inside the panel.
+	 * The returned month and day are 1-12 instead of 0-11.
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#onselect-date-void}
+	 * 
 	 * @param {{ year: number, month: number, day: number }} - The date user selected.
 	 * @example { year: 2025, month: 1, day: 1 } // User selected 1 Jan 2025
 	 */
@@ -25,62 +35,82 @@ export interface SingleDatePickerProps {
 	}) => void
 
 	/**
-	 * The language code that will be used to localize the panel.
+	 * Localization
+	 * @description The language code that will be used to localize the panel.
+	 * 
 	 * Accept standard ISO 639-1 language code, such as 'zh-CN', 'en-US', 'ja-JP', etc. Note 
 	 * that it will not effect to the screen reader, but the screen reader will still read the 
 	 * date in the user’s language.
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#localization}
 	 * @default navigator.language
 	 */
 	localization?: string
 
 	/**
-	 * User requires to close the panel without select a specific date. Note that the close button is not 
-	 * visible, but can be read by screen reader. The close button for the screen reader is only available
-	 * when this prop is not `undefined`.
+	 * Event handler when the panel is closed.
+	 * @description User requires to close the panel without select a specific date. Note 
+	 * that the close button is not visible, but can be read by screen reader. The close 
+	 * button for the screen reader is only available when this prop is not `undefined`.
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#onclose-void}
+	 * 
 	 * @default undefined
 	 */
 	onClose?: () => void
 
 	/**
-	 * The main color of the panel, including the text color and the border color.
-	 *@default '#000000'
+	 * Main color of the panel
+	 * @description The main color of the panel, including the text color and the border color.
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#maincolor}
+	 * 
+	 * @default '#000000'
 	 */
 	mainColor?: string
 
 	/**
-	 * The accent color of the panel, including the background color of the selected date.
-	 *@default '#000000'
+	 * Accent color of the panel
+	 * @description The accent color of the panel, including the background color of the selected date.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#accentcolor}
+	 * @default '#000000'
 	 */
 	accentColor?: string
 
 	/**
-	 * The reversed color of the panel, including the text color of the selected date.
-	 *@default '#ffffff'
+	 * Reversed color of the panel
+	 * @description The reversed color of the panel, including the text color of the selected date.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#reversedcolor}
+	 * @default '#ffffff'
 	 */
 	reversedColor?: string
 
 	/**
-	 * The hover color of the panel, including the hover background color of the date.
-	 *@default '#00000017'
+	 * Hover color of the panel
+	 * @description The hover color of the panel, including the hover background color of the date.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#hovercolor}
+	 * @default '#00000017'
 	 */
 	hoverColor?: string
 
 	/**
-	 * The border color of the panel, including the divider color between the header and the body.
-	 *@default '#e0e0e0'
+	 * Border color of the panel
+	 * @description The border color of the panel, including the divider color between the header and the body.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#bordercolor}
+	 * @default '#e0e0e0'
 	 */
 	borderColor?: string
 
 	/**
-	 * Limit a range of dates that can be selected. It should be an array of two dates, which the first
+	 * Available range of dates
+	 * 
+	 * @description Limit a range of dates that can be selected. It should be an array of two dates, which the first
 	 * one is the available range start date, and the second one is the available range end date. 
 	 * 
-	 * If the first one is null, it means that the all dates after the second one is not available. If the second
-	 * one is null, it means that the all dates before the first one is not available. 
-	 * 
-	 * If the first one is behind the second one, Datenel will exchange them automatically.
-	 * 
 	 * The parameter will be ignored if the array length is not 2.
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html#availablerange}
+	 * 
 	 * @example [new Date(2025, 0, 1), new Date(2025, 11, 31)]
 	 * @example [new Date(2025, 0, 1), null]
 	 * @example [null, new Date(2025, 11, 31)]
@@ -92,9 +122,12 @@ export interface SingleDatePickerProps {
 
 /**
  * SingleDatePicker
- * A panel that allows users to select a date.
+ * @description A panel that allows users to select a date. Check out the online documentation for
+ * interactive examples and more details.
  * 
  * @component
+ * 
+ * @see {@link https://datenel.js.org/guide/react/components/SingleDatePicker.html}
  * 
  * @param {SingleDatePickerProps} props
  */
