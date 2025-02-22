@@ -6,7 +6,7 @@ export default () => {
 
 	return (<div className='app'>
 		<div className="border">
-			<SingleDatePicker />
+			<SingleWeekPicker />
 		</div>
 	</div>)
 }

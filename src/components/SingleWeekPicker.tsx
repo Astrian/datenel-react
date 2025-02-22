@@ -2,42 +2,59 @@ import { useEffect, useState } from "react"
 import { generateUniqueId, applyColor, getL10Weekday, getCalendarDates, calculateWeekNum } from "../utils"
 
 export interface SingleWeekPickerProps {
-	/**
- * The language code that will be used to localize the panel.
+/**
+ * The localization of the panel.
+ * @description The language code that will be used to localize the panel.
+ * 
  * Accept standard ISO 639-1 language code, such as 'zh-CN', 'en-US', 'ja-JP', etc. Note 
  * that it will not effect to the screen reader, but the screen reader will still read the 
  * date in the user’s language.
+ * 
+ * @see {@link https://datenel.js.org/guide/react/components/SingleWeekPicker.html#localization}
+ * 
  * @default navigator.language
  */
 	localization?: string
 
-	/**
- * The main color of the panel, including the text color and the border color.
- *@default '#000000'
+/**
+ * Main color of the panel
+ * @description The main color of the panel, including the text color and the border color.
+ * 
+ * @see {@link https://datenel.js.org/guide/react/components/SingleWeekPicker.html#maincolor}
+ * 
+ * @default '#000000'
  */
 	mainColor?: string
 
 	/**
-	 * The accent color of the panel, including the background color of the selected date.
-	 *@default '#000000'
+	 * Accent color of the panel
+	 * @description The accent color of the panel, including the background color of the selected date.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleWeekPicker.html#accentcolor}
+	 * @default '#000000'
 	 */
 	accentColor?: string
 
 	/**
-	 * The reversed color of the panel, including the text color of the selected date.
-	 *@default '#ffffff'
+	 * Reversed color of the panel
+	 * @description The reversed color of the panel, including the text color of the selected date.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleWeekPicker.html#reversedcolor}
+	 * @default '#ffffff'
 	 */
 	reversedColor?: string
 
 	/**
-	 * The hover color of the panel, including the hover background color of the date.
+	 * Hover color of the panel
+	 * @description The hover color of the panel, including the hover background color of the date.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleWeekPicker.html#hovercolor}
 	 *@default '#00000017'
 	 */
 	hoverColor?: string
 
 	/**
-	 * The border color of the panel, including the divider color between the header and the body.
-	 *@default '#e0e0e0'
+	 * Border color of the panel
+	 * @description The border color of the panel, including the divider color between the header and the body.
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleWeekPicker.html#bordercolor}
+	 * @default '#e0e0e0'
 	 */
 	borderColor?: string
 
@@ -45,8 +62,11 @@ export interface SingleWeekPickerProps {
 	 * A callback function that will be called when a week is selected inside the panel. Note that
 	 * Datenel will follow the ISO 8601 standard to calculate the week number, which means that the first
 	 * week of the year is the week with the first Friday in it (week started from Monday).
-	 * @param {{ year: number, month: number, day: number }} - The date user selected.
-	 * @example { year: 2025, month: 1, day: 1 } // User selected 1 Jan 2025
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleWeekPicker.html#onselect-week-void}
+	 * 
+	 * @param {{ weekYear: number, weekNum: number }} - The week user selected.
+	 * @example { weekYear: 2025, weekNum: 1 } // User selected the first week of 2025
 	 */
 	onSelect?: (date: {
 		weekYear: number,
@@ -54,18 +74,23 @@ export interface SingleWeekPickerProps {
 	}) => void
 
 	/**
-	 * User requires to close the panel without select a specific date. Note that the close button is not 
-	 * visible, but can be read by screen reader. The close button for the screen reader is only available
-	 * when this prop is not `undefined`.
+	 * Event handler when the panel is closed.
+	 * @description User requires to close the panel without select a specific date. Note 
+	 * that the close button is not visible, but can be read by screen reader. The close 
+	 * button for the screen reader is only available when this prop is not `undefined`.
+	 * 
+	 * @see {@link https://datenel.js.org/guide/react/components/SingleWeekPicker.html#onclose-void}
+	 * 
 	 * @default undefined
 	 */
 	onClose?: () => void
 
 	/**
-		* Control the selected
-		* date programmatically, including situations like provide a default value or control the selected 
-		* date by parent component. When using the Date object, the week number related to the date will be
-		* applied to the panel.
+	 	* Value of the panel
+		* @description Control the selected week programmatically, including situations like provide a 
+		* default value or control the selected week by parent component. When using the Date object, 
+		* the week number related to the date will be applied to the panel.
+		* @see {@link https://datenel.js.org/guide/react/components/SingleWeekPicker.html#value}
 		* @example { weekYear: 2025, weekNum: 1 }
 		* @example new Date(2025, 0, 1)
 		* @default new Date()
@@ -75,11 +100,13 @@ export interface SingleWeekPickerProps {
 
 /**
  * SingleWeekPicker
- * A panel that allows users to select a week.
+ * @description A panel that allows users to select a week.
  * 
  * @component
  * 
- * @param 
+ * @see {@link https://datenel.js.org/guide/react/components/SingleWeekPicker.html}
+ * 
+ * @param {SingleWeekPickerProps} props
  */
 export default ({ localization, mainColor = '#000000', accentColor = '#000000', reversedColor = '#ffffff', hoverColor = '#00000017', borderColor = '#e0e0e0', onClose, onSelect, value }: SingleWeekPickerProps) => {
 	const [currentMonth, setCurrentMonth] = useState(new Date().getMonth())
